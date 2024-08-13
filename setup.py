@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='my_library',
+    name='lfepy',
     version='1.0.0',
     author='Prof. Dr. Khalid M. Hosny, BSc. Mahmoud A. Mohamed',
     author_email='lfepy@gmail.com',
@@ -26,5 +26,5 @@ setup(
         'License :: OSI Approved :: MIT License',  # Update according to your license
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.12',
 )

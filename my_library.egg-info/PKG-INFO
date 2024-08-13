@@ -1,3 +1,20 @@
+Metadata-Version: 2.1
+Name: my_library
+Version: 1.0.0
+Summary: lfepy is a Python package for local feature extraction
+Home-page: https://github.com/yourusername/my_library
+Author: Prof. Dr. Khalid M. Hosny, BSc. Mahmoud A. Mohamed
+Author-email: lfepy@gmail.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.12
+Description-Content-Type: text/markdown
+License-File: LICENSE.md
+Requires-Dist: numpy>=1.26.4
+Requires-Dist: scipy>=1.13.0
+Requires-Dist: scikit-image>=0.23.2
+
 # lfepy
 
 **lfepy** is a Python package for local feature extraction. It provides feature extraction from images, facilitating AI tasks like object detection, facial recognition, and classification.
