@@ -8,7 +8,7 @@ setup(
     description='lfepy is a Python package for local feature extraction',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/my_library',  # Replace with your repository URL
+    url='https://github.com/lfepy/lfepy',  # Replace with your repository URL
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
