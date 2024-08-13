@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='lfepy',
-    version='1.0.0',
+    version='1.0',
     author='Prof. Dr. Khalid M. Hosny, BSc. Mahmoud A. Mohamed',
     author_email='lfepy@gmail.com',
     description='lfepy is a Python package for local feature extraction',
@@ -26,5 +26,5 @@ setup(
         'License :: OSI Approved :: MIT License',  # Update according to your license
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.12',
+    python_requires='>=3.0',
 )

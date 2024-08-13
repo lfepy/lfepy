@@ -24,7 +24,7 @@
 
 ## Requirements
 
-- **python>=3.12**
+- **python>=3.0**
 - **numpy>=1.26.4**
 - **scipy>=1.13.0**
 - **scikit-image>=0.23.2**

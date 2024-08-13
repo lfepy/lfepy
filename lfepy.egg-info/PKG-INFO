@@ -1,14 +1,14 @@
 Metadata-Version: 2.1
 Name: lfepy
-Version: 1.0.0
+Version: 1.0
 Summary: lfepy is a Python package for local feature extraction
-Home-page: https://github.com/yourusername/my_library
+Home-page: https://github.com/lfepy/lfepy
 Author: Prof. Dr. Khalid M. Hosny, BSc. Mahmoud A. Mohamed
 Author-email: lfepy@gmail.com
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Operating System :: OS Independent
-Requires-Python: >=3.12
+Requires-Python: >=3.0
 Description-Content-Type: text/markdown
 License-File: LICENSE.md
 Requires-Dist: numpy>=1.26.4
@@ -41,7 +41,7 @@ Requires-Dist: scikit-image>=0.23.2
 
 ## Requirements
 
-- **python>=3.12**
+- **python>=3.0**
 - **numpy>=1.26.4**
 - **scipy>=1.13.0**
 - **scikit-image>=0.23.2**
