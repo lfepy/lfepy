@@ -56,7 +56,7 @@ plt.show()
 ```
 ![Alt text](example/Example.png)
 ## Documentation
-Comprehensive documentation for lfepy is available at [lfepydocs](documentation/index.html). It includes:
+Comprehensive documentation for lfepy is available at [lfepydocs](documentation/). It includes:
 
 - **Getting Started**
 - **API Reference**
