@@ -1,31 +1,36 @@
 from lfepy.Helper.helper import np, gabor_filter
 from lfepy.Descriptor.LTrP import LTrP
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LGTrP(image, **kwargs):
     """
-        Compute Local Gabor Transitional Pattern (LGTrP) histograms and descriptors from an input image.
+    Compute Local Gabor Transitional Pattern (LGTrP) histograms and descriptors from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LGTrP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LGTrP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - LGTrP_hist (numpy.ndarray): Histogram(s) of LGTrP descriptors.
-            - imgDesc (numpy.ndarray): LGTrP descriptors.
+    :returns:
+        - LGTrP_hist: Histogram(s) of LGTrP descriptors.
+        - imgDesc: LGTrP descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LGTrP(image, mode='nh')
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LGTrP(image, mode='nh')
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - M.S. Islam, Local gradient pattern-A novel feature representation for facial expression recognition. Journal of AI and Data Mining 2 (2014) 33-38.
+    :references:
+        M.S. Islam,
+        Local gradient pattern-A novel feature representation for facial expression recognition,
+        Journal of AI and Data Mining 2 (2014) 33-38.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -33,6 +38,10 @@ def LGTrP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

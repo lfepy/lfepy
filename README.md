@@ -1,6 +1,6 @@
 # lfepy
 
-**lfepy** is a Python package for local feature extraction. It provides feature extraction from images, facilitating AI tasks like object detection, facial recognition, and classification.
+**Local Feature Extractors for Python** is a Python package for local descriptors. It provides feature extraction from grayscale images, facilitating AI tasks like object detection, facial recognition, and classification.
 
 ## Table of Contents
 
@@ -39,15 +39,24 @@ pip install lfepy
 ## Usage
 Basic Example
 ```python
-from lfepy.Descriptor.BPPC import BPPC
+# Import the required packages
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.image import imread
+from lfepy.Descriptor.LBP import LBP
 
-# Example of using a basic function
-BPPC_hist, imgDesc = BPPC(np.double(image))
-print(BPPC_hist)
+# Read the image
+image = imread(PATH)
+# Extract feature using a specified descriptor
+histogram, imgDesc = LBP(image, mode='nh', radius=1, mappingType='riu2')
+# Show the descriptor
+plt.imshow(imgDesc, cmap='gray')
+plt.axis('off')
+plt.show()
 ```
-
+![Alt text](example/Example.png)
 ## Documentation
-Comprehensive documentation for Project Title is available at docs@lfepy. It includes:
+Comprehensive documentation for lfepy is available at [lfepydocs](documentation/index.html). It includes:
 
 - **Getting Started**
 - **API Reference**
@@ -57,4 +66,4 @@ Comprehensive documentation for Project Title is available at docs@lfepy. It inc
 lfepy is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for more details.
 
 ## Contact
-For any questions or support, please contact us at lfepy@gmail.com or visit our GitHub Issues page.
+For any questions or support, please contact us at lfepy@gmail.com or visit our [GitHub](https://github.com/lfepy/lfepy) Issues page.

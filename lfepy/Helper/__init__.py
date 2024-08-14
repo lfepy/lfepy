@@ -1,6 +1,6 @@
 # __init__.py in the main package
-__version__ = '1.0.0'
-__author__ = ["Prof. Dr. Khalid M. Hosny", "B.Sc. Mahmoud A. Mohamed"]
+__version__ = '1.0.1'
+__author__ = ["Dr. Prof. Khalid M. Hosny", "BSc. Mahmoud A. Mohamed", "Dr. Rania Salama", "Dr. Ahmed M. Elshewey"]
 __license__ = 'MIT'
 
 # Example of a package-wide configuration

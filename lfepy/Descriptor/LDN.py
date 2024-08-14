@@ -1,33 +1,41 @@
 from lfepy.Helper.helper import np, descriptor_LDN
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LDN(image, **kwargs):
     """
-        Compute Local Difference Number (LDN) histograms and descriptors from an input image.
+    Compute Local Difference Number (LDN) histograms and descriptors from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LDN extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - mask (str): Mask type for LDN computation. Options: 'gaussian', 'kirsch', 'sobel' or 'prewitt'. Default: 'kirsch'.
-                - msize (int): Mask size if 'mask' is set to 'kirsch'. Default: 3.
-                - start (float): Starting sigma value if 'mask' is set to 'gaussian'. Default: 0.5.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LDN extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.mask: Mask type for LDN computation. Options: 'gaussian', 'kirsch', 'sobel', or 'prewitt'. Default: 'kirsch'.
+    :type kwargs.mask: str
+    :param kwargs.msize: Mask size if 'mask' is set to 'kirsch'. Default: 3.
+    :type kwargs.msize: int
+    :param kwargs.start: Starting sigma value if 'mask' is set to 'gaussian'. Default: 0.5.
+    :type kwargs.start: float
 
-        Returns:
-            - LDN_hist (numpy.ndarray): Histogram(s) of LDN descriptors.
-            - imgDesc (list): List of dictionaries containing LDN descriptors.
+    :returns:
+        - LDN_hist: Histogram(s) of LDN descriptors.
+        - imgDesc: List of dictionaries containing LDN descriptors.
+    :rtype: tuple of (numpy.ndarray, list)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LDN(image, mode='nh', mask='kirsch', msize=3, start=0.5)
-            plt.imshow(imgDesc[0]['fea'], cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LDN(image, mode='nh', mask='kirsch', msize=3, start=0.5)
+        >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - A.R. Rivera, J.R. Castillo, and O.O. Chae, Local directional number pattern for face analysis: Face and expression recognition. IEEE transactions on image processing 22 (2013) 1740-1752.
+    :references:
+        A.R. Rivera, J.R. Castillo, and O.O. Chae,
+        Local directional number pattern for face analysis: Face and expression recognition.
+        IEEE transactions on image processing 22 (2013) 1740-1752.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -35,6 +43,10 @@ def LDN(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

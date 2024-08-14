@@ -1,30 +1,35 @@
 from lfepy.Helper.helper import np
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def GDP2(image, **kwargs):
     """
-        Compute Gradient Direction Pattern (GDP2) descriptors and histograms from an input image.
+    Compute Gradient Direction Pattern (GDP2) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing GDP2 extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing GDP2 extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - GDP2_hist (numpy.ndarray): Histogram(s) of GDP2 descriptors.
-            - imgDesc (numpy.ndarray): GDP2 descriptors.
+    :returns:
+        - GDP2_hist: Histogram(s) of GDP2 descriptors.
+        - imgDesc: GDP2 descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = GDP2(image, mode='nh')
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = GDP2(image, mode='nh')
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - M.S. Islam, Gender Classification using Gradient Direction Pattern. Science International 25 (2013).
+    :references:
+        M.S. Islam,
+        Gender Classification using Gradient Direction Pattern.
+        Science International 25 (2013).
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -32,6 +37,10 @@ def GDP2(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

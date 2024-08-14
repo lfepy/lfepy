@@ -1,31 +1,37 @@
 from lfepy.Helper.helper import np, convolve2d
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LDTP(image, **kwargs):
     """
-        Compute Local Directional Texture Pattern (LDTP) descriptors and histograms from an input image.
+    Compute Local Directional Texture Pattern (LDTP) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LDTP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - epsi (int): Threshold value for texture difference. Default: 15.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LDTP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.epsi: Threshold value for texture difference. Default: 15.
+    :type kwargs.epsi: int
 
-        Returns:
-            - LDTP_hist (numpy.ndarray): Histogram(s) of LDTP descriptors.
-            - imgDesc (numpy.ndarray): LDTP descriptors.
+    :returns:
+        - LDTP_hist: Histogram(s) of LDTP descriptors.
+        - imgDesc: LDTP descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LDTP(image, mode='nh', epsi=15)
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LDTP(image, mode='nh', epsi=15)
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - A.R. Rivera, J.R. Castillo, and O. Chae, Local directional texture pattern image descriptor. Pattern Recognition Letters 51 (2015) 94-100.
+    :references:
+        A.R. Rivera, J.R. Castillo, and O. Chae,
+        Local directional texture pattern image descriptor.
+        Pattern Recognition Letters 51 (2015) 94-100.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -33,6 +39,10 @@ def LDTP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

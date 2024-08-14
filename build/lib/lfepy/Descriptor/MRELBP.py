@@ -1,38 +1,43 @@
 from lfepy.Helper.helper import (np, NewRDLBP_Image, view_as_windows, get_mapping_info_ct, NILBP_Image_ct,
                                  RDLBP_Image_SmallestRadiusOnly)
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def MRELBP(image, **kwargs):
     """
-        Compute the Median Robust Extended Local Binary Pattern (MRELBP) descriptors and histogram from an input image.
+    Compute the Median Robust Extended Local Binary Pattern (MRELBP) descriptors and histogram from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing MRELBP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing MRELBP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - MRELBP_hist (numpy.ndarray): Histogram(s) of MRELBP descriptors.
-            - imgDesc (list of dicts): A list of dictionaries where each dictionary contains the LBP descriptors for different radii. Each dictionary has:
-                - 'fea' (dict): Features extracted for the specific radius, including:
-                    - 'CImg' (numpy.ndarray): Processed image data after median filtering and LBP transformation.
-                    - 'NILBPImage' (numpy.ndarray): Histogram of the No-Interpolation LBP image.
-                    - 'RDLBPImage' (numpy.ndarray): Histogram of the Refined Descriptors LBP image.
+    :returns:
+        - MRELBP_hist: Histogram(s) of MRELBP descriptors.
+        - imgDesc: A list of dictionaries where each dictionary contains the LBP descriptors for different radii. Each dictionary has:
+            - 'fea': Features extracted for the specific radius, including:
+                - 'CImg': Processed image data after median filtering and LBP transformation.
+                - 'NILBPImage': Histogram of the No-Interpolation LBP image.
+                - 'RDLBPImage': Histogram of the Refined Descriptors LBP image.
+    :rtype: tuple of (numpy.ndarray, list of dicts)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = MRELBP(image, mode='nh')
-            plt.imshow(imgDesc[0]['fea']['NILBPImage'], cmap='gray')
-            plt.axis('off')
-            plt.show()
-            plt.imshow(imgDesc[0]['fea']['RDLBPImage'], cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = MRELBP(image, mode='nh')
+        >>> plt.imshow(imgDesc[0]['fea']['NILBPImage'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
+        >>> plt.imshow(imgDesc[0]['fea']['RDLBPImage'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - L. Liu, S. Lao, P.W. Fieguth, Y. Guo, X. Wang, and M. Pietikäinen, Median robust extended local binary pattern for texture classification. IEEE Transactions on Image Processing 25 (2016) 1368-1381.
+    :references:
+        L. Liu, S. Lao, P.W. Fieguth, Y. Guo, X. Wang, and M. Pietikäinen,
+        Median robust extended local binary pattern for texture classification.
+        IEEE Transactions on Image Processing 25 (2016) 1368-1381.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -40,6 +45,10 @@ def MRELBP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

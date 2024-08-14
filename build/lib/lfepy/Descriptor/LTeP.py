@@ -1,31 +1,38 @@
 from lfepy.Helper.helper import np
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LTeP(image, **kwargs):
     """
-        Compute Local Ternary Pattern (LTeP) histograms and descriptors from an input image.
+    Compute Local Ternary Pattern (LTeP) histograms and descriptors from an input image.
 
-        Parameters:
-            - img (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LTeP extraction.
-                - t (int): Threshold value for ternary pattern computation. Default: 2.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param img: Input image (preferably in NumPy array format).
+    :type img: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LTeP extraction.
+    :type kwargs: dict
+    :param kwargs.t: Threshold value for ternary pattern computation. Default: 2.
+    :type kwargs.t: int
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - LTeP_hist (numpy.ndarray): Histogram(s) of LTeP descriptors.
-            - imgDesc (list): List of dictionaries containing LTeP descriptors.
+    :returns:
+        - LTeP_hist: Histogram(s) of LTeP descriptors.
+        - imgDesc: List of dictionaries containing LTeP descriptors.
+    :rtype: tuple of (numpy.ndarray, list)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LTeP(image, mode='nh', windowSize=5)
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LTeP(image, mode='nh', t=2)
+        >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - F. Bashar, A. Khan, F. Ahmed, and M.H. Kabir, Robust facial expression recognition based on median ternary pattern (MTP), Electrical Information and Communication Technology (EICT), 2013 International Conference on, IEEE, 2014, pp. 1-5.
+    :references:
+        F. Bashar, A. Khan, F. Ahmed, and M.H. Kabir,
+        Robust facial expression recognition based on median ternary pattern (MTP),
+        Electrical Information and Communication Technology (EICT), 2013 International Conference on,
+        IEEE, 2014, pp. 1-5.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -33,6 +40,10 @@ def LTeP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

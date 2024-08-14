@@ -1,37 +1,49 @@
 from lfepy.Helper.helper import np
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def WLD(image, **kwargs):
     """
-        Compute Weber Local Descriptor (WLD) histograms and descriptors from an input image.
+    Compute Weber Local Descriptor (WLD) histograms and descriptors from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing WLD extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - T (int): Number of bins for gradient orientation. Default: 8.
-                - N (int): Number of bins for differential excitation. Default: 4.
-                - scaleTop (int): Number of scales to consider for WLD computation. Default: 1.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing WLD extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.T: Number of bins for gradient orientation. Default: 8.
+    :type kwargs.T: int
+    :param kwargs.N: Number of bins for differential excitation. Default: 4.
+    :type kwargs.N: int
+    :param kwargs.scaleTop: Number of scales to consider for WLD computation. Default: 1.
+    :type kwargs.scaleTop: int
 
-        Returns:
-            - WLD_hist (numpy.ndarray): Histogram(s) of WLD descriptors.
-            - imgDesc (list): List of dictionaries containing WLD descriptors.
+    :returns:
+        - WLD_hist: Histogram(s) of WLD descriptors.
+        - imgDesc: List of dictionaries containing WLD descriptors.
+    :rtype: tuple of (numpy.ndarray, list of dicts)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = WLD(image, mode='nh', T=8, N=4, scaleTop=1)
-            plt.imshow(imgDesc[0]['fea']['GO'], cmap='gray')
-            plt.axis('off')
-            plt.show()
-            plt.imshow(imgDesc[1]['fea']['DE'], cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = WLD(image, mode='nh', T=8, N=4, scaleTop=1)
+        >>> plt.imshow(imgDesc[0]['fea']['GO'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
+        >>> plt.imshow(imgDesc[1]['fea']['DE'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - S. Li, D. Gong, and Y. Yuan, Face recognition using Weber local descriptors. Neurocomputing 122 (2013) 272-283.
-            - S. Liu, Y. Zhang, and K. Liu, Facial expression recognition under partial occlusion based on Weber Local Descriptor histogram and decision fusion, Control Conference (CCC), 2014 33rd Chinese, IEEE, 2014, pp. 4664-4668.
+    :references:
+        S. Li, D. Gong, and Y. Yuan,
+        Face recognition using Weber local descriptors.
+        Neurocomputing 122 (2013) 272-283.
+
+        S. Liu, Y. Zhang, and K. Liu,
+        Facial expression recognition under partial occlusion based on Weber Local Descriptor histogram and decision fusion,
+        Control Conference (CCC), 2014 33rd Chinese,
+        IEEE, 2014, pp. 4664-4668.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -39,6 +51,10 @@ def WLD(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

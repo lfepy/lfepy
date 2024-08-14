@@ -1,30 +1,36 @@
 from lfepy.Helper.helper import np
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LMP(image, **kwargs):
     """
-        Compute Local Monotonic Pattern (LMP) descriptors and histograms from an input image.
+    Compute Local Monotonic Pattern (LMP) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LMP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LMP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - LMP_hist (numpy.ndarray): Histogram(s) of LMP descriptors.
-            - imgDesc (numpy.ndarray): LMP descriptors.
+    :returns:
+        - LMP_hist: Histogram(s) of LMP descriptors.
+        - imgDesc: LMP descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LMP(image, mode='nh')
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LMP(image, mode='nh')
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - T. Mohammad, and M.L. Ali, Robust facial expression recognition based on local monotonic pattern (LMP), Computer and Information Technology (ICCIT), 2011 14th International Conference on, IEEE, 2011, pp. 572-576.
+    :references:
+        T. Mohammad, and M.L. Ali,
+        Robust facial expression recognition based on local monotonic pattern (LMP),
+        Computer and Information Technology (ICCIT), 2011 14th International Conference on,
+        IEEE, 2011, pp. 572-576.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -32,6 +38,10 @@ def LMP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

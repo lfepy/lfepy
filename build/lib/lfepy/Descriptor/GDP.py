@@ -1,33 +1,45 @@
 from lfepy.Helper.helper import np, convolve2d, get_mapping
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def GDP(image, **kwargs):
     """
-        Compute Gradient Directional Pattern (GDP) descriptors and histograms from an input image.
+    Compute Gradient Directional Pattern (GDP) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing GDP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - mask (str): Mask type for gradient computation. Options: 'sobel', 'prewitt'. Default: 'sobel'.
-                - t (float): Threshold value for gradient angle difference. Default: 22.5.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing GDP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.mask: Mask type for gradient computation. Options: 'sobel', 'prewitt'. Default: 'sobel'.
+    :type kwargs.mask: str
+    :param kwargs.t: Threshold value for gradient angle difference. Default: 22.5.
+    :type kwargs.t: float
 
-        Returns:
-            - GDP_hist (numpy.ndarray): Histogram(s) of GDP descriptors.
-            - imgDesc (numpy.ndarray): GDP descriptors.
+    :returns:
+        - GDP_hist: Histogram(s) of GDP descriptors.
+        - imgDesc: GDP descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = GDP(image, mode='nh', mask='sobel', t=22.5)
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = GDP(image, mode='nh', mask='sobel', t=22.5)
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - F. Ahmed, Gradient directional pattern: a robust feature descriptor for facial expression recognition. Electronics letters 48 (2012) 1203-1204.
-            - W. Chu, Facial expression recognition based on local binary pattern and gradient directional pattern, Green Computing and Communications (GreenCom), 2013 IEEE and Internet of Things (iThings/CPSCom), IEEE International Conference on and IEEE Cyber, Physical and Social Computing, IEEE, 2013, pp. 1458-1462.
+    :references:
+        F. Ahmed,
+        Gradient directional pattern: a robust feature descriptor for facial expression recognition.
+        Electronics letters 48 (2012) 1203-1204.
+
+        W. Chu,
+        Facial expression recognition based on local binary pattern and gradient directional pattern,
+        Green Computing and Communications (GreenCom), 2013 IEEE and Internet of Things (iThings/CPSCom),
+        IEEE International Conference on and IEEE Cyber, Physical and Social Computing,
+        IEEE, 2013, pp. 1458-1462.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -35,6 +47,10 @@ def GDP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

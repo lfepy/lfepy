@@ -1,30 +1,35 @@
 from lfepy.Helper.helper import np
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LGP(image, **kwargs):
     """
-        Compute Local Gradient Pattern (LGP) descriptors and histograms from an input image.
+    Compute Local Gradient Pattern (LGP) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LGP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LGP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - LGP_hist (numpy.ndarray): Histogram(s) of LGP descriptors.
-            - imgDesc (numpy.ndarray): LGP descriptors.
+    :returns:
+        - LGP_hist: Histogram(s) of LGP descriptors.
+        - imgDesc: LGP descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LGP(image, mode='nh')
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LGP(image, mode='nh')
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - M.S. Islam, Local gradient pattern-A novel feature representation for facial expression recognition. Journal of AI and Data Mining 2 (2014) 33-38.
+    :references:
+        M.S. Islam,
+        Local gradient pattern-A novel feature representation for facial expression recognition,
+        Journal of AI and Data Mining 2 (2014) 33-38.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -32,6 +37,10 @@ def LGP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

@@ -1,32 +1,42 @@
 from lfepy.Helper.helper import np, monofilt, descriptor_LBP, lxp_phase
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def MBC(image, **kwargs):
     """
-        Compute Monogenic Binary Coding (MBC) histograms and descriptors from an input image.
+    Compute Monogenic Binary Coding (MBC) histograms and descriptors from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing MBC extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - mbcMode (str): Mode for MBC computation. Options: 'A' (amplitude), 'O' (orientation), 'P' (phase). Default: 'A'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing MBC extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.mbcMode: Mode for MBC computation. Options: 'A' (amplitude), 'O' (orientation), 'P' (phase). Default: 'A'.
+    :type kwargs.mbcMode: str
 
-        Returns:
-            - MBC_hist (numpy.ndarray): Histogram of MBC descriptors.
-            - imgDesc (list): List of dictionaries containing MBC descriptors.
+    :returns:
+        - MBC_hist: Histogram of MBC descriptors.
+        - imgDesc: List of dictionaries containing MBC descriptors.
+    :rtype: tuple of (numpy.ndarray, list)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = MBC(image, mode='nh', mbcMode='A')
-            plt.imshow(imgDesc[0]['fea'], cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = MBC(image, mode='nh', mbcMode='A')
+        >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - M. Yang, L. Zhang, S.C.-K. Shiu, and D. Zhang, Monogenic binary coding: An efficient local feature extraction approach to face recognition. IEEE Transactions on Information Forensics and Security 7 (2012) 1738-1751.
-            - X.X. Xia, Z.L. Ying, and W.J. Chu, Facial Expression Recognition Based on Monogenic Binary Coding, Applied Mechanics and Materials, Trans Tech Publ, 2014, pp. 437-440.
+    :references:
+        M. Yang, L. Zhang, S.C.-K. Shiu, and D. Zhang,
+        Monogenic binary coding: An efficient local feature extraction approach to face recognition.
+        IEEE Transactions on Information Forensics and Security 7 (2012) 1738-1751.
+
+        X.X. Xia, Z.L. Ying, and W.J. Chu,
+        Facial Expression Recognition Based on Monogenic Binary Coding,
+        Applied Mechanics and Materials,
+        Trans Tech Publ, 2014, pp. 437-440.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -34,6 +44,10 @@ def MBC(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

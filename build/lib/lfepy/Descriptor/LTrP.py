@@ -1,31 +1,41 @@
 from lfepy.Helper.helper import np
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LTrP(image, **kwargs):
     """
-        Compute Local Transitional Pattern (LTrP) histograms and descriptors from an input image.
+    Compute Local Transitional Pattern (LTrP) histograms and descriptors from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LTrP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LTrP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - LTrP_hist (numpy.ndarray): Histogram(s) of LTrP descriptors.
-            - imgDesc (numpy.ndarray): LTrP Descriptors.
+    :returns:
+        - LTrP_hist: Histogram(s) of LTrP descriptors.
+        - imgDesc: LTrP descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LTrP(image, mode='nh')
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LTrP(image, mode='nh')
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - T. Jabid, and O. Chae, Local Transitional Pattern: A Robust Facial Image Descriptor for Automatic Facial Expression Recognition, Proc. International Conference on Computer Convergence Technology, Seoul, Korea, 2011, pp. 333-44.
-            - T. Jabid, and O. Chae, Facial Expression Recognition Based on Local Transitional Pattern. International Information Institute (Tokyo). Information 15 (2012) 2007.
+    :references:
+        T. Jabid, and O. Chae,
+        Local Transitional Pattern: A Robust Facial Image Descriptor for Automatic Facial Expression Recognition,Proc.
+        International Conference on Computer Convergence Technology,
+        Seoul, Korea, 2011, pp. 333-44.
+
+        T. Jabid, and O. Chae,
+        Facial Expression Recognition Based on Local Transitional Pattern.
+        International Information Institute (Tokyo).
+        Information 15 (2012) 2007.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -33,6 +43,10 @@ def LTrP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

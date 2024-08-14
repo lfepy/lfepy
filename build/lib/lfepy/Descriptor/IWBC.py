@@ -1,31 +1,37 @@
 from lfepy.Helper.helper import np
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def IWBC(image, **kwargs):
     """
-        Compute Improved Weber Contrast (IWBC) descriptors and histograms from an input image.
+    Compute Improved Weber Contrast (IWBC) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing IWBC extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - scale (int): Scale factor for IWBC computation. Default: 1.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing IWBC extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.scale: Scale factor for IWBC computation. Default: 1.
+    :type kwargs.scale: int
 
-        Returns:
-            - IWBC_hist (numpy.ndarray): Histogram(s) of IWBC descriptors.
-            - imgDesc (list): List of dictionaries containing IWBC descriptors.
+    :returns:
+        - IWBC_hist: Histogram(s) of IWBC descriptors.
+        - imgDesc: List of dictionaries containing IWBC descriptors.
+    :rtype: tuple of (numpy.ndarray, list)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = IWBC(image, mode='nh', scale=1)
-            plt.imshow(imgDesc[0]['fea'], cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = IWBC(image, mode='nh', scale=1)
+        >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - B.-Q. Yang, T. Zhang, C.-C. Gu, K.-J. Wu, and X.-P. Guan, A novel face recognition method based on iwld and iwbc. Multimedia Tools and Applications 75 (2016) 6979.
+    :references:
+        B.-Q. Yang, T. Zhang, C.-C. Gu, K.-J. Wu, and X.-P. Guan,
+        A novel face recognition method based on iwld and iwbc.
+        Multimedia Tools and Applications 75 (2016) 6979.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -33,6 +39,10 @@ def IWBC(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

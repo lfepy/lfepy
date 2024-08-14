@@ -1,30 +1,36 @@
 from lfepy.Helper.helper import np, convolve2d
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LDiPv(image, **kwargs):
     """
-        Compute Local Directional Pattern Variance (LDiPv) descriptors and histograms from an input image.
+    Compute Local Directional Pattern Variance (LDiPv) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LDiPv extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LDiPv extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - LDiPv_hist (numpy.ndarray): Histogram(s) of LDiPv descriptors.
-            - imgDesc (numpy.ndarray): LDiPv descriptors themselves.
+    :returns:
+        - LDiPv_hist: Histogram(s) of LDiPv descriptors.
+        - imgDesc: LDiPv descriptors themselves.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-             image = Image.open(Path)
-             histogram, imgDesc = LDiPv(image, mode='nh')
-             plt.imshow(imgDesc, cmap='gray')
-             plt.axis('off')
-             plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LDiPv(image, mode='nh')
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - M.H. Kabir, T. Jabid, and O. Chae, A local directional pattern variance (LDPv) based face descriptor for human facial expression recognition, Advanced Video and Signal Based Surveillance (AVSS), 2010 Seventh IEEE International Conference on, IEEE, 2010, pp. 526-532.
+    :references:
+        M.H. Kabir, T. Jabid, and O. Chae,
+        A local directional pattern variance (LDPv) based face descriptor for human facial expression recognition,
+        Advanced Video and Signal Based Surveillance (AVSS), 2010 Seventh IEEE International Conference on,
+        IEEE, 2010, pp. 526-532.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -32,6 +38,10 @@ def LDiPv(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

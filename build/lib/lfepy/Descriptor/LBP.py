@@ -1,32 +1,39 @@
 from lfepy.Helper.helper import np, descriptor_LBP, get_mapping
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LBP(image, **kwargs):
     """
-        Compute Local Binary Patterns (LBP) descriptors and histograms from an input image.
+    Compute Local Binary Patterns (LBP) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LBP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - radius (int): Radius for LBP computation. Default: 1.
-                - mappingType (str): Type of mapping for LBP computation. Options: 'full', 'ri', 'u2', 'riu2'. Default: 'full'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LBP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.radius: Radius for LBP computation. Default: 1.
+    :type kwargs.radius: int
+    :param kwargs.mappingType: Type of mapping for LBP computation. Options: 'full', 'ri', 'u2', 'riu2'. Default: 'full'.
+    :type kwargs.mappingType: str
 
-        Returns:
-            - LBP_hist (numpy.ndarray): Histogram(s) of LBP descriptors.
-            - imgDesc (numpy.ndarray): LBP descriptors.
+    :returns:
+        - LBP_hist: Histogram(s) of LBP descriptors.
+        - imgDesc: LBP descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LBP(image, mode='nh', radius=1, mappingType='full')
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LBP(image, mode='nh', radius=1, mappingType='full')
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - T. Ojala, M. Pietikainen, and T. Maenpaa, Multi-resolution gray-scale and rotation invariant texture classification with local binary patterns. IEEE Transactions on pattern analysis and machine intelligence 24 (2002) 971-987.
+    :references:
+        T. Ojala, M. Pietikainen, and T. Maenpaa,
+        Multi-resolution gray-scale and rotation invariant texture classification with local binary patterns.
+        IEEE Transactions on pattern analysis and machine intelligence 24 (2002) 971-987.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -34,6 +41,10 @@ def LBP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

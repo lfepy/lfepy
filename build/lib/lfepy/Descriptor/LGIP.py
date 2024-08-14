@@ -1,30 +1,36 @@
 from lfepy.Helper.helper import np
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LGIP(image, **kwargs):
     """
-        Compute Local Gradient Increasing Pattern (LGIP) descriptors and histograms from an input image.
+    Compute Local Gradient Increasing Pattern (LGIP) descriptors and histograms from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LGIP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LGIP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
 
-        Returns:
-            - LGIP_hist (numpy.ndarray): Histogram(s) of LGIP descriptors.
-            - imgDesc (numpy.ndarray): LGIP descriptors themselves.
+    :returns:
+        - LGIP_hist: Histogram(s) of LGIP descriptors.
+        - imgDesc: LGIP descriptors themselves.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LGIP(image, mode='nh')
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LGIP(image, mode='nh')
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - Z. Lubing, and W. Han, Local gradient increasing pattern for facial expression recognition, Image Processing (ICIP), 2012 19th IEEE International Conference on, IEEE, 2012, pp. 2601-2604.
+    :references:
+        Z. Lubing, and W. Han,
+        Local gradient increasing pattern for facial expression recognition,
+        Image Processing (ICIP), 2012 19th IEEE International Conference on,
+        IEEE, 2012, pp. 2601-2604.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -32,6 +38,10 @@ def LGIP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

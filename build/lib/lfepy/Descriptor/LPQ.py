@@ -1,32 +1,43 @@
 from lfepy.Helper.helper import np, descriptor_LPQ
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def LPQ(image, **kwargs):
     """
-        Compute Local Phase Quantization (LPQ) histograms and descriptors from an input image.
+    Compute Local Phase Quantization (LPQ) histograms and descriptors from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing LPQ extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - windowSize (int): Size of the sliding window for LPQ. Default: 5.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing LPQ extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.windowSize: Size of the sliding window for LPQ. Default: 5.
+    :type kwargs.windowSize: int
 
-        Returns:
-            - LPQ_hist (numpy.ndarray): Histogram of LPQ descriptors.
-            - imgDesc (numpy.ndarray): LPQ descriptors.
+    :returns:
+        - LPQ_hist: Histogram of LPQ descriptors.
+        - imgDesc: LPQ descriptors.
+    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = LPQ(image, mode='nh', windowSize=5)
-            plt.imshow(imgDesc, cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = LPQ(image, mode='nh', windowSize=5)
+        >>> plt.imshow(imgDesc, cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - V. Ojansivu, and J. Heikkilä, Blur insensitive texture classification using local phase quantization, International conference on image and signal processing, Springer, 2008, pp. 236-243.
-            - A. Dhall, A. Asthana, R. Goecke, and T. Gedeon, Emotion recognition using PHOG and LPQ features, Automatic Face & Gesture Recognition and Workshops (FG 2011), 2011 IEEE International Conference on, IEEE, 2011, pp. 878-883.
+    :references:
+        V. Ojansivu, and J. Heikkilä,
+        Blur insensitive texture classification using local phase quantization,
+        International conference on image and signal processing,
+        Springer, 2008, pp. 236-243.
+
+        A. Dhall, A. Asthana, R. Goecke, and T. Gedeon,
+        Emotion recognition using PHOG and LPQ features,
+        Automatic Face & Gesture Recognition and Workshops (FG 2011), 2011 IEEE International Conference on,
+        IEEE, 2011, pp. 878-883.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -34,6 +45,10 @@ def LPQ(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

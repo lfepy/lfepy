@@ -1,34 +1,45 @@
 from lfepy.Helper.helper import np, convolve2d
 from lfepy.Descriptor.LTeP import LTeP
-from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def GLTP(image, **kwargs):
     """
-        Compute Gradient-based Local Ternary Pattern (GLTP) histograms and descriptors from an input image.
+    Compute Gradient-based Local Ternary Pattern (GLTP) histograms and descriptors from an input image.
 
-        Parameters:
-            - image (numpy.ndarray): Input image (preferably in NumPy array format).
-            - **kwargs (dict): Additional keyword arguments for customizing GLTP extraction.
-                - mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-                - t (int): Threshold value for ternary pattern computation. Default: 10.
-                - DGLP (int): Flag to include Directional Gradient-based Local Pattern. If set to 1, includes DGLP. Default: 0.
+    :param image: Input image (preferably in NumPy array format).
+    :type image: numpy.ndarray
+    :param kwargs: Additional keyword arguments for customizing GLTP extraction.
+    :type kwargs: dict
+    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
+    :type kwargs.mode: str
+    :param kwargs.t: Threshold value for ternary pattern computation. Default: 10.
+    :type kwargs.t: int
+    :param kwargs.DGLP: Flag to include Directional Gradient-based Local Pattern. If set to 1, includes DGLP. Default: 0.
+    :type kwargs.DGLP: int
 
-        Returns:
-            - GLTP_hist (numpy.ndarray): Histogram(s) of GLTP descriptors.
-            - imgDesc (list): List of dictionaries containing GLTP descriptors.
+    :returns:
+        - GLTP_hist: Histogram(s) of GLTP descriptors.
+        - imgDesc: List of dictionaries containing GLTP descriptors.
+    :rtype: tuple of (numpy.ndarray, list)
 
-        Example:
-            image = Image.open(Path)
-            histogram, imgDesc = GLTP(image, mode='nh', t=10, DGLP=1)
-            plt.imshow(imgDesc[0]['fea'], cmap='gray')
-            plt.axis('off')
-            plt.show()
+    :example:
+        >>> from PIL import Image
+        >>> import matplotlib.pyplot as plt
+        >>> image = Image.open(Path)
+        >>> histogram, imgDesc = GLTP(image, mode='nh', t=10, DGLP=1)
+        >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
+        >>> plt.axis('off')
+        >>> plt.show()
 
-        References:
-            - M. Valstar, and M. Pantic, Fully automatic facial action unit detection and temporal analysis, Computer Vision and Pattern Recognition Workshop, 2006. CVPRW'06. Conference on, IEEE, 2006, pp. 149-149.
-            - F. Ahmed, and E. Hossain, Automated facial expression recognition using gradient-based ternary texture patterns. Chinese Journal of Engineering 2013 (2013).
+    :references:
+        M. Valstar, and M. Pantic,
+        Fully automatic facial action unit detection and temporal analysis,
+        Computer Vision and Pattern Recognition Workshop, 2006. CVPRW'06. Conference on,
+        IEEE, 2006, pp. 149-149.
+
+        F. Ahmed, and E. Hossain,
+        Automated facial expression recognition using gradient-based ternary texture patterns.
+        Chinese Journal of Engineering 2013 (2013).
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
@@ -36,6 +47,10 @@ def GLTP(image, **kwargs):
 
     # Convert the input image to double precision
     image = np.double(image)
+
+    # Convert to grayscale if needed
+    if len(image.shape) == 3:
+        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
 
     # Handle keyword arguments
     if kwargs is None:

@@ -11,16 +11,17 @@ from skimage.feature import canny
 
 def roundn(x, n):
     """
-        Round a number to a specified number of decimal places.
+    Round a number to a specified number of decimal places.
 
-        Parameters:
-            - x (float or array-like): The number or array of numbers to be rounded.
-            - n (int): The number of decimal places to round to. If n is negative, x is rounded to the left of the decimal point. If n is zero, x is rounded to the nearest integer.
+    :param x: The number or array of numbers to be rounded.
+    :type x: float or array-like
+    :param n: The number of decimal places to round to. If `n` is negative, `x` is rounded to the left of the decimal point. If `n` is zero, `x` is rounded to the nearest integer.
+    :type n: int
 
-        Returns:
-            - float or array-like: The rounded number or array of numbers.
+    :returns: The rounded number or array of numbers.
+    :rtype: float or array-like
 
-        Example:
+    :example:
         >>> roundn(123.456, 2)
         123.46
         >>> roundn(123.456, -1)
@@ -48,20 +49,21 @@ def roundn(x, n):
 
 def view_as_windows(arr, window_shape, step=1):
     """
-        Create a view of an array with sliding windows.
+    Create a view of an array with sliding windows.
 
-        Parameters:
-            - arr (numpy.ndarray): The input array.
-            - window_shape (tuple): Shape of the sliding window.
-            - step (int or tuple): Step size of the sliding window.
+    :param arr: The input array.
+    :type arr: numpy.ndarray
+    :param window_shape: Shape of the sliding window.
+    :type window_shape: tuple
+    :param step: Step size of the sliding window.
+    :type step: int or tuple
 
-        Returns:
-            - numpy.ndarray: A view of the array with sliding windows.
+    :returns: A view of the array with sliding windows.
+    :rtype: numpy.ndarray
 
-        Raises:
-            - ValueError: If any dimension of the window shape is larger than the corresponding dimension of the array.
+    :raises ValueError: If any dimension of the window shape is larger than the corresponding dimension of the array.
 
-        Example:
+    :example:
         >>> view_as_windows(np.array([1, 2, 3, 4]), window_shape=(2,), step=1)
         array([[1, 2],
                [2, 3],
@@ -90,22 +92,23 @@ def view_as_windows(arr, window_shape, step=1):
 
 def get_mapping(samples, mappingtype):
     """
-        Generate a mapping table for Local Binary Patterns (LBP) codes.
+    Generate a mapping table for Local Binary Patterns (LBP) codes.
 
-        Parameters:
-            - samples (int): The number of sampling points in the LBP.
-            - mappingtype (str): The type of LBP mapping ('u2', 'ri', 'riu2').
+    :param samples: The number of sampling points in the LBP.
+    :type samples: int
+    :param mappingtype: The type of LBP mapping ('u2', 'ri', 'riu2').
+    :type mappingtype: str
 
-        Returns:
-            - dict: A dictionary with the following keys:
-                - 'table': The mapping table.
-                - 'samples': The number of sampling points.
-                - 'num': The number of patterns in the resulting LBP code.
+    :returns: A dictionary with the following keys:
+    :rtype: dict
+    :returns:
+        - 'table': The mapping table.
+        - 'samples': The number of sampling points.
+        - 'num': The number of patterns in the resulting LBP code.
 
-        Raises:
-            - ValueError: If an unsupported mapping type is provided.
+    :raises ValueError: If an unsupported mapping type is provided.
 
-        Example:
+    :example:
         >>> get_mapping(8, 'u2')
         {'table': array([...]), 'samples': 8, 'num': 59}
     """
@@ -165,19 +168,21 @@ def get_mapping(samples, mappingtype):
 
 def get_mapping_mrelbp(samples, mappingtype):
     """
-        Generate a mapping table for Modified Rotation and Uniform Local Binary Patterns (MRELBP) codes.
+    Generate a mapping table for Modified Rotation and Uniform Local Binary Patterns (MRELBP) codes.
 
-        Parameters:
-            - samples (int): The number of sampling points in the LBP.
-            - mappingtype (str): The type of LBP mapping, supporting various uniform, rotation invariant, and modified patterns.
+    :param samples: The number of sampling points in the LBP.
+    :type samples: int
+    :param mappingtype: The type of LBP mapping, supporting various uniform, rotation invariant, and modified patterns.
+    :type mappingtype: str
 
-        Returns:
-            - dict: A dictionary with the following keys:
-                - 'table': The mapping table.
-                - 'samples': The number of sampling points.
-                - 'num': The number of patterns in the resulting LBP code.
+    :returns: A dictionary with the following keys:
+    :rtype: dict
+    :returns:
+        - 'table': The mapping table.
+        - 'samples': The number of sampling points.
+        - 'num': The number of patterns in the resulting LBP code.
 
-        Example:
+    :example:
         >>> get_mapping_mrelbp(8, 'u2')
         {'table': array([...]), 'samples': 8, 'num': 59}
     """
@@ -270,17 +275,23 @@ def get_mapping_mrelbp(samples, mappingtype):
 
 def get_mapping_info_ct(lbp_radius, lbp_points, lbp_method):
     """
-        Retrieve or generate a mapping for circular (center-symmetric) LBP.
+    Retrieve or generate a mapping for circular (center-symmetric) LBP.
 
-        Parameters:
-            - lbp_radius (int): The radius of the LBP.
-            - lbp_points (int): The number of sampling points in the LBP.
-            - lbp_method (str): The method for LBP mapping.
+    :param lbp_radius: The radius of the LBP.
+    :type lbp_radius: int
+    :param lbp_points: The number of sampling points in the LBP.
+    :type lbp_points: int
+    :param lbp_method: The method for LBP mapping.
+    :type lbp_method: str
 
-        Returns:
-            - dict: A dictionary with the mapping information.
+    :returns: A dictionary with the mapping information.
+    :rtype: dict
+    :returns:
+        - 'table': The mapping table.
+        - 'samples': The number of sampling points.
+        - 'num': The number of patterns in the resulting LBP code.
 
-        Example:
+    :example:
         >>> get_mapping_info_ct(1, 24, 'LBPriu2')
         {'table': array([...]), 'samples': 24, 'num': 26}
     """
@@ -311,25 +322,27 @@ def get_mapping_info_ct(lbp_radius, lbp_points, lbp_method):
 
 def descriptor_LBP(*varargin):
     """
-        Compute the Local Binary Pattern (LBP) of an image with various options for radius, neighbors, mapping, and mode.
+    Compute the Local Binary Pattern (LBP) of an image with various options for radius, neighbors, mapping, and mode.
 
-        Parameters:
-            - *varargin: Variable length argument list.
-                - image (numpy.ndarray): The input image.
-                - radius (int): The radius of the LBP.
-                - neighbors (int): The number of sampling points in the LBP.
-                - mapping (dict): The mapping information.
-                - mode (str): The mode for LBP calculation ('h', 'hist', 'nh').
+    :param image: The input image.
+    :type image: numpy.ndarray
+    :param radius: The radius of the LBP.
+    :type radius: int
+    :param neighbors: The number of sampling points in the LBP.
+    :type neighbors: int
+    :param mapping: The mapping information.
+    :type mapping: dict or None
+    :param mode: The mode for LBP calculation. Options are 'h' (histogram), 'hist' (histogram), or 'nh' (normalized histogram).
+    :type mode: str
 
-        Returns:
-            - tuple:
-                - result (numpy.ndarray): The LBP histogram or LBP image.
-                - codeImage (numpy.ndarray): The LBP code image.
+    :returns: A tuple containing:
+        - result: The LBP histogram or LBP image.
+        - codeImage: The LBP code image.
+    :rtype: tuple
 
-        Raises:
-            - ValueError: If the number of input arguments is incorrect or other validation fails.
+    :raises ValueError: If the number of input arguments is incorrect or other validation fails.
 
-        Example:
+    :example:
         >>> image = np.random.rand(100, 100)
         >>> result, codeImage = compute_lbp(image, 1, 8, None, 'nh')
     """
@@ -489,21 +502,27 @@ def descriptor_LBP(*varargin):
 def construct_Gabor_filters(num_of_orient, num_of_scales, size1, fmax=0.25,
                             ni=np.sqrt(2), gamma=np.sqrt(2), separation=np.sqrt(2)):
     """
-        Constructs a bank of Gabor filters.
+    Constructs a bank of Gabor filters.
 
-        Parameters:
-            - num_of_orient (int): Number of orientations.
-            - num_of_scales (int): Number of scales.
-            - size1 (int or tuple): Size of the filters (either an integer for square filters or a tuple for rectangular filters).
-            - fmax (float, optional): Maximum frequency. Default is 0.25.
-            - ni (float, optional): Bandwidth parameter. Default is sqrt(2).
-            - gamma (float, optional): Aspect ratio. Default is sqrt(2).
-            - separation (float, optional): Frequency separation factor. Default is sqrt(2).
+    :param num_of_orient: Number of orientations.
+    :type num_of_orient: int
+    :param num_of_scales: Number of scales.
+    :type num_of_scales: int
+    :param size1: Size of the filters. Can be an integer for square filters or a tuple for rectangular filters.
+    :type size1: int or tuple
+    :param fmax: Maximum frequency. Default is 0.25.
+    :type fmax: float, optional
+    :param ni: Bandwidth parameter. Default is sqrt(2).
+    :type ni: float, optional
+    :param gamma: Aspect ratio. Default is sqrt(2).
+    :type gamma: float, optional
+    :param separation: Frequency separation factor. Default is sqrt(2).
+    :type separation: float, optional
 
-        Returns:
-            - dict: A dictionary containing the spatial and frequency representations of the Gabor filters.
+    :returns: A dictionary containing the spatial and frequency representations of the Gabor filters.
+    :rtype: dict
 
-        Example:
+    :example:
         >>> import matplotlib.pyplot as plt
         >>> num_of_orient = 8
         >>> num_of_scales = 5
@@ -564,20 +583,21 @@ def construct_Gabor_filters(num_of_orient, num_of_scales, size1, fmax=0.25,
 
 def filter_image_with_Gabor_bank(image, filter_bank, down_sampling_factor=64):
     """
-        Apply a Gabor filter bank to an image and return the filtered features.
+    Apply a Gabor filter bank to an image and return the filtered features.
 
-        Parameters:
-            - image (np.ndarray): Input image to be filtered. Should be a 2D numpy array.
-            - filter_bank (dict): Dictionary containing Gabor filter bank with 'spatial' and 'freq' keys.
-            - down_sampling_factor (int, optional): Factor for down-sampling the filtered images. Default is 64.
+    :param image: Input image to be filtered. Should be a 2D numpy array.
+    :type image: np.ndarray
+    :param filter_bank: Dictionary containing Gabor filter bank with 'spatial' and 'freq' keys.
+    :type filter_bank: dict
+    :param down_sampling_factor: Factor for down-sampling the filtered images. Default is 64.
+    :type down_sampling_factor: int, optional
 
-        Returns:
-            - np.ndarray: Concatenated filtered features from the Gabor filter bank.
+    :returns: Concatenated filtered features from the Gabor filter bank.
+    :rtype: np.ndarray
 
-        Raises:
-            - ValueError: If the inputs are not as expected or dimensions do not match.
+    :raises ValueError: If the inputs are not as expected or dimensions do not match.
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage.data import camera
         >>> image = camera()
@@ -655,17 +675,19 @@ def filter_image_with_Gabor_bank(image, filter_bank, down_sampling_factor=64):
 
 def gabor_filter(image, orienNum, scaleNum):
     """
-        Apply a Gabor filter bank to an image and organize the results into a multidimensional array.
+    Apply a Gabor filter bank to an image and organize the results into a multidimensional array.
 
-        Parameters:
-            - image (np.ndarray): Input image to be filtered. Should be a 2D numpy array.
-            - orienNum (int): Number of orientation filters in the Gabor filter bank.
-            - scaleNum (int): Number of scale filters in the Gabor filter bank.
+    :param image: Input image to be filtered. Should be a 2D numpy array.
+    :type image: np.ndarray
+    :param orienNum: Number of orientation filters in the Gabor filter bank.
+    :type orienNum: int
+    :param scaleNum: Number of scale filters in the Gabor filter bank.
+    :type scaleNum: int
 
-        Returns:
-            - np.ndarray: Multi-dimensional array containing the Gabor magnitude responses. Shape is (height, width, orienNum, scaleNum).
+    :returns: Multidimensional array containing the Gabor magnitude responses. Shape is (height, width, orienNum, scaleNum).
+    :rtype: np.ndarray
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage.data import camera
         >>> image = camera()
@@ -702,20 +724,21 @@ def gabor_filter(image, orienNum, scaleNum):
 
 def low_pass_filter(size, cutoff, n):
     """
-        Creates a low-pass Butterworth filter.
+    Creates a low-pass Butterworth filter.
 
-        Parameters:
-            - size (tuple of int): The size of the filter. If a single integer is provided, the filter will be square with that size.
-            - cutoff (float): The cutoff frequency for the filter. Must be between 0 and 0.5.
-            - n (int): The order of the Butterworth filter. Must be an integer greater than or equal to 1.
+    :param size: The size of the filter. If a single integer is provided, the filter will be square with that size.
+    :type size: tuple of int
+    :param cutoff: The cutoff frequency for the filter. Must be between 0 and 0.5.
+    :type cutoff: float
+    :param n: The order of the Butterworth filter. Must be an integer greater than or equal to 1.
+    :type n: int
 
-        Returns:
-            - np.ndarray: The low-pass Butterworth filter in the frequency domain.
+    :returns: The low-pass Butterworth filter in the frequency domain.
+    :rtype: np.ndarray
 
-        Raises:
-            - ValueError: If `cutoff` is not in the range [0, 0.5], or if `n` is not an integer greater than or equal to 1.
+    :raises ValueError: If `cutoff` is not in the range [0, 0.5], or if `n` is not an integer greater than or equal to 1.
 
-        Example:
+    :example:
         >>> filter_size = (256, 256)
         >>> cutoff_frequency = 0.1
         >>> order = 2
@@ -753,42 +776,52 @@ def low_pass_filter(size, cutoff, n):
 def phase_cong3(image, nscale=4, norient=6, minWaveLength=3, mult=2.1, sigmaOnf=0.55,
                 dThetaOnSigma=1.5, k=2.0, cutOff=0.5, g=10):
     """
-       Computes the phase congruency of an image using a multiscale, multi-orientation approach.
-       Phase congruency is a measure of the image's local contrast, based on the phase information of its frequency components.
-       This method is used for edge detection and texture analysis.
+    Computes the phase congruency of an image using a multiscale, multi-orientation approach.
+    Phase congruency is a measure of the image's local contrast, based on the phase information of its frequency components.
+    This method is used for edge detection and texture analysis.
 
-       Parameters:
-           - image (numpy.ndarray): Input grayscale image as a 2D numpy array.
-           - nscale (int): Number of scales to be used in the analysis (default is 4).
-           - norient (int): Number of orientations to be used in the analysis (default is 6).
-           - minWaveLength (float): Minimum wavelength of the log-Gabor filters (default is 3).
-           - mult (float): Scaling factor for the wavelength of the log-Gabor filters (default is 2.1).
-           - sigmaOnf (float): Standard deviation of the Gaussian function used in the log-Gabor filter (default is 0.55).
-           - dThetaOnSigma (float): Angular spread of the Gaussian function relative to the orientation (default is 1.5).
-           - k (float): Constant to adjust the threshold for noise (default is 2.0).
-           - cutOff (float): Cut-off parameter for weighting function (default is 0.5).
-           - g (float): Gain parameter for the weighting function (default is 10).
+    :param image: Input grayscale image as a 2D numpy array.
+    :type image: numpy.ndarray
+    :param nscale: Number of scales to be used in the analysis (default is 4).
+    :type nscale: int, optional
+    :param norient: Number of orientations to be used in the analysis (default is 6).
+    :type norient: int, optional
+    :param minWaveLength: Minimum wavelength of the log-Gabor filters (default is 3).
+    :type minWaveLength: float, optional
+    :param mult: Scaling factor for the wavelength of the log-Gabor filters (default is 2.1).
+    :type mult: float, optional
+    :param sigmaOnf: Standard deviation of the Gaussian function used in the log-Gabor filter (default is 0.55).
+    :type sigmaOnf: float, optional
+    :param dThetaOnSigma: Angular spread of the Gaussian function relative to the orientation (default is 1.5).
+    :type dThetaOnSigma: float, optional
+    :param k: Constant to adjust the threshold for noise (default is 2.0).
+    :type k: float, optional
+    :param cutOff: Cut-off parameter for weighting function (default is 0.5).
+    :type cutOff: float, optional
+    :param g: Gain parameter for the weighting function (default is 10).
+    :type g: float, optional
 
-       Returns:
-           - tuple: A tuple containing:
-               - M (numpy.ndarray): The measure of local phase congruency.
-               - m (numpy.ndarray): The measure of local phase concavity.
-               - or_ (numpy.ndarray): Orientation of the phase congruency.
-               - featType (numpy.ndarray): Feature type (complex representation of phase congruency).
-               - PC (list): List of phase congruency maps for each orientation.
-               - EO (list): List of complex responses for each scale and orientation.
+    :returns: A tuple containing:
+        - M: The measure of local phase congruency.
+        - m: The measure of local phase concavity.
+        - ori: Orientation of the phase congruency.
+        - featType: Feature type (complex representation of phase congruency).
+        - PC: List of phase congruency maps for each orientation.
+        - EO: List of complex responses for each scale and orientation.
+    :rtype: tuple of numpy.ndarray and list
 
-       Notes:
-           - The function assumes the input image is grayscale.
-           - The log-Gabor filters are used to analyze the image at different scales and orientations.
-           - The phase congruency is computed based on the response of these filters, and noise is estimated and thresholded.
-           - The result includes orientation information, which can be useful for edge detection and texture analysis.
+    :raises ValueError: If the input image is not a 2D numpy array.
 
-       Example:
-           >>> import numpy as np
-           >>> from scipy import fftpack
-           >>> image = np.random.rand(256, 256)
-           >>> M, m, or_, featType, PC, EO = phase_cong3(image)
+    :notes:
+        - The function assumes the input image is grayscale.
+        - The log-Gabor filters are used to analyze the image at different scales and orientations.
+        - The phase congruency is computed based on the response of these filters, and noise is estimated and thresholded.
+        - The result includes orientation information, which can be useful for edge detection and texture analysis.
+
+    :example:
+        >>> import numpy as np
+        >>> image = np.random.rand(256, 256)
+        >>> M, m, ori, featType, PC, EO = phase_cong3(image)
     """
     epsilon = .0001
 
@@ -926,41 +959,45 @@ def phase_cong3(image, nscale=4, norient=6, minWaveLength=3, mult=2.1, sigmaOnf=
     denom = np.sqrt(covxy ** 2 + (covx2 - covy2) ** 2) + epsilon
     sin2theta = covxy / denom
     cos2theta = (covx2 - covy2) / denom
-    or_ = np.arctan2(sin2theta, cos2theta) / 2
-    or_ = np.rad2deg(or_)
-    or_[or_ < 0] += 180
+    ori = np.arctan2(sin2theta, cos2theta) / 2
+    ori = np.rad2deg(ori)
+    ori[ori < 0] += 180
 
     M = (covy2 + covx2 + denom) / 2
     m = (covy2 + covx2 - denom) / 2
 
-    return M, m, or_, featType, PC, EO
+    return M, m, ori, featType, PC, EO
 
 
 def descriptor_LDN(image, **kwargs):
     """
-        Compute the Local Descriptor using Kirsch or Gaussian masks.
-        This function computes a local descriptor for an input image using different masks
-        based on the specified options. The masks include Kirsch masks for various sizes
-        or a Gaussian gradient mask. The size of the mask can be adjusted through the
-        `msize` parameter, and the `sigma` parameter controls the standard deviation for
-        the Gaussian mask.
+    Compute the Local Descriptor using Kirsch or Gaussian masks.
+    This function computes a local descriptor for an input image using different masks
+    based on the specified options. The masks include Kirsch masks for various sizes
+    or a Gaussian gradient mask. The size of the mask can be adjusted through the
+    `msize` parameter, and the `sigma` parameter controls the standard deviation for
+    the Gaussian mask.
 
-        Parameters:
-            - image (numpy.ndarray): The input image for which the descriptor is computed.
-            - **kwargs: Additional optional parameters to customize the mask:
-                - 'mask' (str): Type of mask to use. Options are 'kirsch' (default) or 'gaussian'.
-                - 'msize' (int): Size of the Kirsch mask. Options are 3, 5, 7, 9, or 11 (default is 3).
-                - 'sigma' (float): Standard deviation for the Gaussian mask (default is 0.5).
+    :param image: The input image for which the descriptor is computed.
+    :type image: numpy.ndarray
+    :param kwargs: Additional optional parameters to customize the mask:
+        - 'mask' (str): Type of mask to use. Options are 'kirsch' (default) or 'gaussian'.
+        - 'msize' (int): Size of the Kirsch mask. Options are 3, 5, 7, 9, or 11 (default is 3).
+        - 'sigma' (float): Standard deviation for the Gaussian mask (default is 0.5).
+    :type kwargs: dict, optional
 
-        Returns:
-            - numpy.ndarray: The local descriptor matrix computed using the specified mask.
+    :returns: The local descriptor matrix computed using the specified mask.
+    :rtype: numpy.ndarray
 
-        Raises:
-            - ValueError: If an invalid mask type or size is provided.
+    :raises ValueError: If an invalid mask type or size is provided.
 
-        Example:
-        >>> descriptor_LDN(image, mask='kirsch', msize=5)
-        """
+    :example:
+        >>> import numpy as np
+        >>> from skimage.data import camera
+        >>> image = camera()
+        >>> descriptor = descriptor_LDN(image, mask='kirsch', msize=5)
+        >>> print(descriptor.shape)
+    """
     if kwargs is None:
         options = {}
     else:
@@ -2001,16 +2038,17 @@ def descriptor_LDN(image, **kwargs):
 
 def gauss(x, sigma):
     """
-        Calculate the value of the Gaussian (normal) distribution at a given point.
+    Calculate the value of the Gaussian (normal) distribution at a given point.
 
-        Parameters:
-            - x (float or numpy array): The point or points at which to evaluate the Gaussian function.
-            - sigma (float): The standard deviation of the Gaussian distribution.
+    :param x: The point or points at which to evaluate the Gaussian function.
+    :type x: float or numpy.ndarray
+    :param sigma: The standard deviation of the Gaussian distribution.
+    :type sigma: float
 
-        Returns:
-            - float or numpy array: The value(s) of the Gaussian function at the given point(s).
+    :returns: The value(s) of the Gaussian function at the given point(s).
+    :rtype: float or numpy.ndarray
 
-        Example:
+    :example:
         >>> gauss(0, 1)
         0.3989422804014327
         >>> gauss(np.array([0, 1, 2]), 1)
@@ -2022,16 +2060,17 @@ def gauss(x, sigma):
 
 def dgauss(x, sigma):
     """
-        Compute the derivative of the Gaussian (normal) distribution with respect to x.
+    Compute the derivative of the Gaussian (normal) distribution with respect to x.
 
-        Parameters:
-            - x (float or numpy array): The point or points at which to evaluate the derivative.
-            - sigma (float): The standard deviation of the Gaussian distribution.
+    :param x: The point or points at which to evaluate the derivative.
+    :type x: float or numpy.ndarray
+    :param sigma: The standard deviation of the Gaussian distribution.
+    :type sigma: float
 
-        Returns:
-            - float or numpy array: The derivative of the Gaussian function at the given point(s).
+    :returns: The derivative of the Gaussian function at the given point(s).
+    :rtype: float or numpy.ndarray
 
-        Example:
+    :example:
         >>> dgauss(0, 1)
         -0.0
         >>> dgauss(np.array([0, 1, 2]), 1)
@@ -2042,15 +2081,15 @@ def dgauss(x, sigma):
 
 def gauss_gradient(sigma):
     """
-        Generate a set of 2-D Gaussian derivative kernels for gradient computation at multiple orientations.
+    Generate a set of 2-D Gaussian derivative kernels for gradient computation at multiple orientations.
 
-        Parameters:
-            - sigma (float): The standard deviation of the Gaussian distribution.
+    :param sigma: The standard deviation of the Gaussian distribution.
+    :type sigma: float
 
-        Returns:
-            - numpy.ndarray: A 3D array where each 2D slice represents a Gaussian derivative kernel at a specific orientation.
+    :returns: A 3D array where each 2D slice represents a Gaussian derivative kernel at a specific orientation.
+    :rtype: numpy.ndarray
 
-        Example:
+    :example:
         >>> import matplotlib.pyplot as plt
         >>> sigma = 1.0
         >>> kernels = gauss_gradient(sigma)
@@ -2091,20 +2130,27 @@ def gauss_gradient(sigma):
 
 def descriptor_LPQ(image, winSize=3, decorr=1, freqestim=1, mode='im'):
     """
-        Compute the Local Phase Quantization (LPQ) descriptor for a given grayscale image.
+    Compute the Local Phase Quantization (LPQ) descriptor for a given grayscale image.
 
-        Parameters:
-            - image (numpy array): Grayscale input image.
-            - winSize (int): Size of the window used for LPQ calculation (must be an odd number ≥ 3). Default is 3.
-            - decorr (int): Flag to apply decorrelation. 0 for no decorrelation, 1 for decorrelation. Default is 1.
-            - freqestim (int): Frequency estimation method. 1 for STFT uniform window, 2 for STFT Gaussian window, 3 for Gaussian derivative quadrature filter pair. Default is 1.
-            - mode (str): Specifies the output format. 'im' for image-like output, 'nh' for normalized histogram, 'h' for histogram. Default is 'im'.
+    :param image: Grayscale input image.
+    :type image: numpy.ndarray
+    :param winSize: Size of the window used for LPQ calculation (must be an odd number ≥ 3). Default is 3.
+    :type winSize: int
+    :param decorr: Flag to apply decorrelation. 0 for no decorrelation, 1 for decorrelation. Default is 1.
+    :type decorr: int
+    :param freqestim: Frequency estimation method. 1 for STFT uniform window, 2 for STFT Gaussian window, 3 for Gaussian derivative quadrature filter pair. Default is 1.
+    :type freqestim: int
+    :param mode: Specifies the output format. 'im' for image-like output, 'nh' for normalized histogram, 'h' for histogram. Default is 'im'.
+    :type mode: str
 
-        Returns:
-            - LPQdesc (numpy array): The LPQ descriptor of the image. Depending on `mode`, it could be an image or a histogram.
-            - freqRespAll (numpy array): The frequency responses for all filter pairs.
+    :returns: A tuple containing:
+        - LPQdesc: The LPQ descriptor of the image. Depending on `mode`, it could be an image or a histogram.
+        - freqRespAll: The frequency responses for all filter pairs.
+    :rtype: tuple
+        - LPQdesc (numpy.ndarray): Descriptor image or histogram.
+        - freqRespAll (numpy.ndarray): Frequency responses.
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from scipy import ndimage
         >>> image = np.random.rand(100, 100)
@@ -2114,7 +2160,6 @@ def descriptor_LPQ(image, winSize=3, decorr=1, freqestim=1, mode='im'):
         >>> print(freq_resp.shape)
         (100, 100, 8)
     """
-
     # Initialize parameters
     rho = 0.90
     STFTalpha = 1 / winSize
@@ -2228,26 +2273,40 @@ def descriptor_LPQ(image, winSize=3, decorr=1, freqestim=1, mode='im'):
 
 def monofilt(im, nscale, minWaveLength, mult, sigmaOnf, orientWrap=0, thetaPhase=1):
     """
-        Apply a multiscale directional filter bank to a 2D grayscale image using Log-Gabor filters.
+    Apply a multiscale directional filter bank to a 2D grayscale image using Log-Gabor filters.
 
-        Parameters:
-            - im (numpy array): 2D grayscale image.
-            - nscale (int): Number of scales in the filter bank.
-            - minWaveLength (float): Minimum wavelength of the filters.
-            - mult (float): Scaling factor between consecutive scales.
-            - sigmaOnf (float): Bandwidth of the Log-Gabor filter.
-            - orientWrap (int, optional): If 1, wrap orientations to the range [0, π]. Default is 0 (no wrapping).
-            - thetaPhase (int, optional): If 1, compute phase angles (theta and psi). Default is 1.
+    :param im: 2D grayscale image.
+    :type im: numpy.ndarray
+    :param nscale: Number of scales in the filter bank.
+    :type nscale: int
+    :param minWaveLength: Minimum wavelength of the filters.
+    :type minWaveLength: float
+    :param mult: Scaling factor between consecutive scales.
+    :type mult: float
+    :param sigmaOnf: Bandwidth of the Log-Gabor filter.
+    :type sigmaOnf: float
+    :param orientWrap: If 1, wrap orientations to the range [0, π]. Default is 0 (no wrapping).
+    :type orientWrap: int, optional
+    :param thetaPhase: If 1, compute phase angles (theta and psi). Default is 1.
+    :type thetaPhase: int, optional
 
-        Returns:
-            - f (list of numpy arrays): Filter responses in the spatial domain.
-            - h1f (list of numpy arrays): x-direction filter responses in the spatial domain.
-            - h2f (list of numpy arrays): y-direction filter responses in the spatial domain.
-            - A (list of numpy arrays): Amplitude of the filter responses.
-            - theta (list of numpy arrays, optional): Phase angle of the filter responses, if `thetaPhase` is 1.
-            - psi (list of numpy arrays, optional): Orientation angle of the filter responses, if `thetaPhase` is 1.
+    :returns: A tuple containing:
+        - f: Filter responses in the spatial domain.
+        - h1f: x-direction filter responses in the spatial domain.
+        - h2f: y-direction filter responses in the spatial domain.
+        - A: Amplitude of the filter responses.
+        - theta: Phase angle of the filter responses, if `thetaPhase` is 1.
+        - psi: Orientation angle of the filter responses, if `thetaPhase` is 1.
 
-        Example:
+    :rtype: tuple
+        - f (list of numpy.ndarray): Filter responses.
+        - h1f (list of numpy.ndarray): x-direction filter responses.
+        - h2f (list of numpy.ndarray): y-direction filter responses.
+        - A (list of numpy.ndarray): Amplitude responses.
+        - theta (list of numpy.ndarray, optional): Phase angles.
+        - psi (list of numpy.ndarray, optional): Orientation angles.
+
+    :example:
         >>> import numpy as np
         >>> from scipy import ndimage
         >>> image = np.random.rand(100, 100)
@@ -2339,20 +2398,23 @@ def monofilt(im, nscale, minWaveLength, mult, sigmaOnf, orientWrap=0, thetaPhase
 
 def lxp_phase(image, radius=1, neighbors=8, mapping=None, mode='h'):
     """
-        Compute the Local X-Y Pattern (LXP) descriptor for a 2D grayscale image based on local phase information.
+    Compute the Local X-Y Pattern (LXP) descriptor for a 2D grayscale image based on local phase information.
 
-        Parameters:
-            - image (numpy array): 2D grayscale image.
-            - radius (int, optional): Radius of the circular neighborhood for computing the pattern. Default is 1.
-            - neighbors (int, optional): Number of directions or neighbors to consider. Default is 8.
-            - mapping (numpy array or None, optional): Coordinates of neighbors relative to each pixel.
-              If None, uses a default circular pattern. If a single digit, computes neighbors in a circular pattern based on the digit. Default is None.
-            - mode (str, optional): Mode for output. 'h' or 'hist' for histogram of the LXP, 'nh' for normalized histogram. Default is 'h'.
+    :param image: 2D grayscale image.
+    :type image: numpy.ndarray
+    :param radius: Radius of the circular neighborhood for computing the pattern. Default is 1.
+    :type radius: int, optional
+    :param neighbors: Number of directions or neighbors to consider. Default is 8.
+    :type neighbors: int, optional
+    :param mapping: Coordinates of neighbors relative to each pixel. If None, uses a default circular pattern. If a single digit, computes neighbors in a circular pattern based on the digit. Default is None.
+    :type mapping: numpy.ndarray or None, optional
+    :param mode: Mode for output. 'h' or 'hist' for histogram of the LXP, 'nh' for normalized histogram. Default is 'h'.
+    :type mode: str, optional
 
-        Returns:
-            - numpy array: LXP descriptor, either as a histogram or image depending on the `mode` parameter.
+    :returns: LXP descriptor, either as a histogram or image depending on the `mode` parameter.
+    :rtype: numpy.ndarray
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage import data
         >>> image = data.camera()
@@ -2456,21 +2518,29 @@ def lxp_phase(image, radius=1, neighbors=8, mapping=None, mode='h'):
 
 def descriptor_PHOG(image, bin=8, angle=360, L=2, roi=None):
     """
-        Compute the Pyramid Histogram of Oriented Gradients (PHOG) descriptor for a 2D image.
+    Compute the Pyramid Histogram of Oriented Gradients (PHOG) descriptor for a 2D image.
 
-        Parameters:
-            - image (numpy array): Input image, which can be grayscale or RGB.
-            - bin (int, optional): Number of orientation bins for the histogram. Default is 8.
-            - angle (int, optional): Angle range for orientation. Can be 180 or 360 degrees. Default is 360.
-            - L (int, optional): Number of pyramid levels. Default is 2.
-            - roi (list or None, optional): Region of Interest (ROI) as [y_min, y_max, x_min, x_max]. If None, the entire image is used.
+    :param image: Input image, which can be grayscale or RGB.
+    :type image: numpy.ndarray
+    :param bin: Number of orientation bins for the histogram. Default is 8.
+    :type bin: int, optional
+    :param angle: Angle range for orientation. Can be 180 or 360 degrees. Default is 360.
+    :type angle: int, optional
+    :param L: Number of pyramid levels. Default is 2.
+    :type L: int, optional
+    :param roi: Region of Interest (ROI) as [y_min, y_max, x_min, x_max]. If None, the entire image is used.
+    :type roi: list or None, optional
 
-        Returns:
-            - p_hist (list): List of histograms for each pyramid level.
-            - bh_roi (numpy array): Gradient magnitude matrix for the ROI.
-            - bv_roi (numpy array): Gradient orientation matrix for the ROI.
+    :returns:
+        - p_hist: List of histograms for each pyramid level.
+        - bh_roi: Gradient magnitude matrix for the ROI.
+        - bv_roi: Gradient orientation matrix for the ROI.
+    :rtype:
+        - p_hist: list
+        - bh_roi: numpy.ndarray
+        - bv_roi: numpy.ndarray
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage import data
         >>> image = data.camera()  # Example grayscale image
@@ -2531,20 +2601,28 @@ def descriptor_PHOG(image, bin=8, angle=360, L=2, roi=None):
 
 def bin_matrix(A, E, G, angle, bin):
     """
-        Compute the bin matrix for a given angle map and gradient magnitude.
+    Compute the bin matrix for a given angle map and gradient magnitude.
 
-        Parameters:
-            - A (numpy array): Angle map of the gradient directions.
-            - E (numpy array): Binary edge map where edges are marked.
-            - G (numpy array): Gradient magnitude map.
-            - angle (float): Total range of angles in degrees (e.g., 360 for full circle).
-            - bin (int): Number of bins to divide the angle range into.
+    :param A: Angle map of the gradient directions.
+    :type A: numpy.ndarray
+    :param E: Binary edge map where edges are marked.
+    :type E: numpy.ndarray
+    :param G: Gradient magnitude map.
+    :type G: numpy.ndarray
+    :param angle: Total range of angles in degrees (e.g., 360 for full circle).
+    :type angle: float
+    :param bin: Number of bins to divide the angle range into.
+    :type bin: int
 
-        Returns:
-            - bm (numpy array): Bin matrix with assigned bins for each pixel.
-            - bv (numpy array): Gradient magnitude values corresponding to the bin matrix.
+    :returns:
+        - bm: Bin matrix with assigned bins for each pixel.
+        - bv: Gradient magnitude values corresponding to the bin matrix.
+    :rtype:
+        - bm: numpy.ndarray
+        - bv: numpy.ndarray
 
-        Example:
+    :example:
+        >>> import numpy as np
         >>> A = np.array([[0, 45], [90, 135]])
         >>> E = np.array([[1, 1], [1, 1]])
         >>> G = np.array([[1, 2], [3, 4]])
@@ -2588,18 +2666,22 @@ def bin_matrix(A, E, G, angle, bin):
 
 def phogDescriptor_hist(bh, bv, L, bin):
     """
-        Compute the histogram of the Pyramid Histogram of Oriented Gradients (PHOG) descriptor.
+    Compute the histogram of the Pyramid Histogram of Oriented Gradients (PHOG) descriptor.
 
-        Parameters:
-            - bh (numpy array): Bin matrix of the image, where each pixel is assigned a bin index.
-            - bv (numpy array): Gradient magnitude matrix corresponding to the bin matrix.
-            - L (int): Number of pyramid levels.
-            - bin (int): Number of bins for the histogram.
+    :param bh: Bin matrix of the image, where each pixel is assigned a bin index.
+    :type bh: numpy.ndarray
+    :param bv: Gradient magnitude matrix corresponding to the bin matrix.
+    :type bv: numpy.ndarray
+    :param L: Number of pyramid levels.
+    :type L: int
+    :param bin: Number of bins for the histogram.
+    :type bin: int
 
-        Returns:
-            - numpy array: Normalized histogram of the PHOG descriptor.
+    :returns: Normalized histogram of the PHOG descriptor.
+    :rtype: numpy.ndarray
 
-        Example:
+    :example:
+        >>> import numpy as np
         >>> bh = np.array([[1, 2], [2, 1]])
         >>> bv = np.array([[1, 2], [2, 1]])
         >>> L = 2
@@ -2649,19 +2731,23 @@ def phogDescriptor_hist(bh, bv, L, bin):
 
 def NILBP_Image_ct(img, lbpPoints, mapping, mode, lbpRadius):
     """
-        Compute the Neighborhood Binary Pattern (NILBP) descriptor for an image using circular interpolation.
+    Compute the Neighborhood Binary Pattern (NILBP) descriptor for an image using circular interpolation.
 
-        Parameters:
-            - img (numpy array): 2D grayscale image.
-            - lbpPoints (int): Number of points used in the LBP pattern.
-            - mapping (dict or None): A dictionary containing 'num' (number of bins) and 'table' (mapping table). If None, no mapping is applied.
-            - mode (str): Mode for output. 'h' or 'hist' for histogram of the NILBP, 'nh' for normalized histogram.
-            - lbpRadius (int): Radius of the circular neighborhood for computing LBP.
+    :param img: 2D grayscale image.
+    :type img: numpy.ndarray
+    :param lbpPoints: Number of points used in the LBP pattern.
+    :type lbpPoints: int
+    :param mapping: A dictionary containing 'num' (number of bins) and 'table' (mapping table). If None, no mapping is applied.
+    :type mapping: dict or None
+    :param mode: Mode for output. 'h' or 'hist' for histogram of the NILBP, 'nh' for normalized histogram.
+    :type mode: str
+    :param lbpRadius: Radius of the circular neighborhood for computing LBP.
+    :type lbpRadius: int
 
-        Returns:
-            - numpy array: NILBP descriptor, either as a histogram or image depending on the `mode` parameter.
+    :returns: NILBP descriptor, either as a histogram or image depending on the `mode` parameter.
+    :rtype: numpy.ndarray
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()
@@ -2718,19 +2804,22 @@ def NILBP_Image_ct(img, lbpPoints, mapping, mode, lbpRadius):
 
 def cirInterpSingleRadius_ct(img, lbpPoints, lbpRadius):
     """
-        Perform circular interpolation for a single radius in the LBP (Local Binary Pattern) computation.
+    Perform circular interpolation for a single radius in the LBP (Local Binary Pattern) computation.
 
-        Parameters:
-            - img (numpy array): 2D grayscale image.
-            - lbpPoints (int): Number of points used in the LBP pattern.
-            - lbpRadius (int): Radius of the circular neighborhood for computing LBP.
+    :param img: 2D grayscale image.
+    :type img: numpy.ndarray
+    :param lbpPoints: Number of points used in the LBP pattern.
+    :type lbpPoints: int
+    :param lbpRadius: Radius of the circular neighborhood for computing LBP.
+    :type lbpRadius: int
 
-        Returns:
-            - blocks (numpy array): Array of size (lbpPoints, imgNewH * imgNewW) containing the interpolated pixel values.
-            - dx (int): Width of the output blocks.
-            - dy (int): Height of the output blocks.
+    :returns:
+        - blocks (numpy.ndarray): Array of size (lbpPoints, imgNewH * imgNewW) containing the interpolated pixel values.
+        - dx (int): Width of the output blocks.
+        - dy (int): Height of the output blocks.
+    :rtype: tuple
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()  # Example grayscale image
@@ -2740,7 +2829,6 @@ def cirInterpSingleRadius_ct(img, lbpPoints, lbpRadius):
         >>> print(blocks.shape)  # Shape of the blocks array
         (8, 9216)  # Example output shape
     """
-
     # Get image dimensions
     imgH, imgW = img.shape
 
@@ -2806,23 +2894,28 @@ def cirInterpSingleRadius_ct(img, lbpPoints, lbpRadius):
 
 def NewRDLBP_Image(img, imgPre, lbpRadius, lbpRadiusPre, lbpPoints, mapping=None, mode='h'):
     """
-        Compute the Radial Difference Local Binary Pattern (RDLBP) between two images.
+    Compute the Radial Difference Local Binary Pattern (RDLBP) between two images.
 
-        Parameters:
-            - img (numpy array): 2D grayscale image.
-            - imgPre (numpy array): 2D grayscale image for comparison.
-            - lbpRadius (int): Radius of the circular neighborhood for the current image.
-            - lbpRadiusPre (int): Radius of the circular neighborhood for the comparison image.
-            - lbpPoints (int): Number of points used in the LBP pattern.
-            - mapping (dict or None, optional): Mapping dictionary for converting the LBP result to a different bin scheme.
-              If provided, must contain 'num' (number of bins) and 'table' (mapping from old bin to new bin).
-            - mode (str, optional): Mode for output. 'h' or 'hist' for histogram of the RDLBP, 'nh' for normalized histogram.
-              Default is 'h'.
+    :param img: 2D grayscale image.
+    :type img: numpy.ndarray
+    :param imgPre: 2D grayscale image for comparison.
+    :type imgPre: numpy.ndarray
+    :param lbpRadius: Radius of the circular neighborhood for the current image.
+    :type lbpRadius: int
+    :param lbpRadiusPre: Radius of the circular neighborhood for the comparison image.
+    :type lbpRadiusPre: int
+    :param lbpPoints: Number of points used in the LBP pattern.
+    :type lbpPoints: int
+    :param mapping: Mapping dictionary for converting the LBP result to a different bin scheme.
+        If provided, must contain 'num' (number of bins) and 'table' (mapping from old bin to new bin).
+    :type mapping: dict or None, optional
+    :param mode: Mode for output. 'h' or 'hist' for histogram of the RDLBP, 'nh' for normalized histogram. Default is 'h'.
+    :type mode: str, optional
 
-        Returns:
-            - numpy array: RDLBP descriptor, either as a histogram or image depending on the `mode` parameter.
+    :returns: RDLBP descriptor, either as a histogram or image depending on the `mode` parameter.
+    :rtype: numpy.ndarray
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()
@@ -2834,7 +2927,6 @@ def NewRDLBP_Image(img, imgPre, lbpRadius, lbpRadiusPre, lbpPoints, mapping=None
         >>> print(hist.shape)
         (256,)  # Example output shape for normalized histogram
     """
-
     # Extract circularly interpolated blocks from the current image
     blocks1, _, _ = cirInterpSingleRadiusNew(img, lbpPoints, lbpRadius)
     blocks1 = blocks1.T
@@ -2881,21 +2973,26 @@ def NewRDLBP_Image(img, imgPre, lbpRadius, lbpRadiusPre, lbpPoints, mapping=None
 
 def RDLBP_Image_SmallestRadiusOnly(imgCenSmooth, img, lbpRadius, lbpPoints, mapping, mode):
     """
-        Compute the Radial Difference Local Binary Pattern (RDLBP) for an image with a focus on the smallest radius.
+    Compute the Radial Difference Local Binary Pattern (RDLBP) for an image with a focus on the smallest radius.
 
-        Parameters:
-            - imgCenSmooth (numpy array): Smoothed image from which the radial difference is computed.
-            - img (numpy array): Original image for extracting circularly interpolated blocks.
-            - lbpRadius (int): Radius of the circular neighborhood for LBP.
-            - lbpPoints (int): Number of points used in the LBP pattern.
-            - mapping (dict or None): Optional mapping dictionary for converting LBP result to a different bin scheme.
-              Must contain 'num' (number of bins) and 'table' (mapping from old bin to new bin).
-            - mode (str): Output mode. 'h' or 'hist' for histogram of the RDLBP, 'nh' for normalized histogram.
+    :param imgCenSmooth: Smoothed image from which the radial difference is computed.
+    :type imgCenSmooth: numpy.ndarray
+    :param img: Original image for extracting circularly interpolated blocks.
+    :type img: numpy.ndarray
+    :param lbpRadius: Radius of the circular neighborhood for LBP.
+    :type lbpRadius: int
+    :param lbpPoints: Number of points used in the LBP pattern.
+    :type lbpPoints: int
+    :param mapping: Optional mapping dictionary for converting LBP result to a different bin scheme.
+        Must contain 'num' (number of bins) and 'table' (mapping from old bin to new bin).
+    :type mapping: dict or None
+    :param mode: Output mode. 'h' or 'hist' for histogram of the RDLBP, 'nh' for normalized histogram.
+    :type mode: str
 
-        Returns:
-            - numpy array: RDLBP descriptor, either as a histogram or image depending on the `mode` parameter.
+    :returns: RDLBP descriptor, either as a histogram or image depending on the `mode` parameter.
+    :rtype: numpy.ndarray
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()
@@ -2905,9 +3002,8 @@ def RDLBP_Image_SmallestRadiusOnly(imgCenSmooth, img, lbpRadius, lbpPoints, mapp
         >>> mapping = {'num': 256, 'table': np.arange(256)}
         >>> hist = RDLBP_Image_SmallestRadiusOnly(imgCenSmooth, img, lbpRadius, lbpPoints, mapping, mode='nh')
         >>> print(hist.shape)
-        (256,)
+        (256,)  # Example output shape for normalized histogram
     """
-
     # Extract circularly interpolated blocks from the original image
     blocks1, dx, dy = cirInterpSingleRadiusNew(img, lbpPoints, lbpRadius)
     blocks1 = blocks1.T
@@ -2958,19 +3054,22 @@ def RDLBP_Image_SmallestRadiusOnly(imgCenSmooth, img, lbpRadius, lbpPoints, mapp
 
 def cirInterpSingleRadiusNew(img, lbpPoints, lbpRadius):
     """
-        Extract circularly interpolated image blocks around a specified radius and number of points.
+    Extract circularly interpolated image blocks around a specified radius and number of points.
 
-        Parameters:
-            - img (numpy array): The input grayscale image.
-            - lbpPoints (int): The number of points used in the LBP pattern.
-            - lbpRadius (int): The radius of the circular neighborhood.
+    :param img: The input grayscale image.
+    :type img: numpy.ndarray
+    :param lbpPoints: The number of points used in the LBP pattern.
+    :type lbpPoints: int
+    :param lbpRadius: The radius of the circular neighborhood.
+    :type lbpRadius: int
 
-        Returns:
-            - blocks (numpy array): A 2D array where each row represents a circularly interpolated block.
-            - dx (int): The width of the output blocks.
-            - dy (int): The height of the output blocks.
+    :returns:
+        - blocks: A 2D array where each row represents a circularly interpolated block.
+        - dx: The width of the output blocks.
+        - dy: The height of the output blocks.
+    :rtype: tuple (numpy.ndarray, int, int)
 
-        Example:
+    :example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()
