@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.MTP import MTP  # Replace with the actual module name
+from lfepy.Descriptor import MTP  # Replace with the actual module name
 
 
 class TestMTP(unittest.TestCase):

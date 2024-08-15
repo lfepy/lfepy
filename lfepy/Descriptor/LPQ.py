@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, descriptor_LPQ
+import numpy as np
+from lfepy.Helper import descriptor_LPQ
 
 
 def LPQ(image, **kwargs):
@@ -22,7 +23,7 @@ def LPQ(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LPQ(image, mode='nh', windowSize=5)
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')

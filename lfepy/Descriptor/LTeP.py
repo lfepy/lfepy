@@ -1,4 +1,4 @@
-from lfepy.Helper.helper import np
+import numpy as np
 
 
 def LTeP(image, **kwargs):
@@ -22,7 +22,7 @@ def LTeP(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LTeP(image, mode='nh', t=2)
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')

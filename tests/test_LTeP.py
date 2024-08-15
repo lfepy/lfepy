@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.LTeP import LTeP  # Replace with the actual module name
+from lfepy.Descriptor import LTeP  # Replace with the actual module name
 
 
 class TestLTeP(unittest.TestCase):

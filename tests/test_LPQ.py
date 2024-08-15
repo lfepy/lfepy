@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.LPQ import LPQ  # Replace with the actual module name
+from lfepy.Descriptor import LPQ  # Replace with the actual module name
 
 
 class TestLPQ(unittest.TestCase):

@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, monofilt, descriptor_LBP, lxp_phase
+import numpy as np
+from lfepy.Helper import monofilt, descriptor_LBP, lxp_phase
 
 
 def MBC(image, **kwargs):
@@ -22,7 +23,7 @@ def MBC(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = MBC(image, mode='nh', mbcMode='A')
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')

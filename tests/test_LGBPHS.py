@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.LGBPHS import LGBPHS  # Replace with the actual module name
+from lfepy.Descriptor import LGBPHS  # Replace with the actual module name
 
 
 class TestLGBPHS(unittest.TestCase):

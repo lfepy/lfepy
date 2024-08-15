@@ -1,4 +1,4 @@
-from lfepy.Helper.helper import np
+import numpy as np
 
 
 def GDP2(image, **kwargs):
@@ -20,7 +20,7 @@ def GDP2(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = GDP2(image, mode='nh')
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')

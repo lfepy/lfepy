@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.LGDiP import LGDiP  # Replace with the actual module name
+from lfepy.Descriptor import LGDiP  # Replace with the actual module name
 
 
 class TestLGDiP(unittest.TestCase):

@@ -1,7 +1,6 @@
 import unittest
 import numpy as np
-from scipy.signal import convolve2d
-from lfepy.Descriptor.LDTP import LDTP  # Replace with the actual module name
+from lfepy.Descriptor import LDTP  # Replace with the actual module name
 
 
 class TestLDTP(unittest.TestCase):

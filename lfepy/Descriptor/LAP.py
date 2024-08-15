@@ -1,4 +1,4 @@
-from lfepy.Helper.helper import np
+import numpy as np
 
 
 def LAP(image, **kwargs):
@@ -20,7 +20,7 @@ def LAP(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LAP(image, mode='nh')
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')

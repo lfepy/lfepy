@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.LGP import LGP  # Replace with the actual module name
+from lfepy.Descriptor import LGP  # Replace with the actual module name
 
 
 class TestLGP(unittest.TestCase):

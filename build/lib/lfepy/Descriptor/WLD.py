@@ -1,4 +1,4 @@
-from lfepy.Helper.helper import np
+import numpy as np
 
 
 def WLD(image, **kwargs):
@@ -26,7 +26,7 @@ def WLD(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("PATH")
         >>> histogram, imgDesc = WLD(image, mode='nh', T=8, N=4, scaleTop=1)
         >>> plt.imshow(imgDesc[0]['fea']['GO'], cmap='gray')
         >>> plt.axis('off')

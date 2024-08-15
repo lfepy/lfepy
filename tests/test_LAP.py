@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.LAP import LAP  # Replace with the actual module name
+from lfepy.Descriptor import LAP  # Replace with the actual module name
 
 
 class TestLAP(unittest.TestCase):

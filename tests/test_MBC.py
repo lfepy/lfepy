@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.MBC import MBC  # Replace with the actual module name
+from lfepy.Descriptor import MBC  # Replace with the actual module name
 
 
 class TestMBC(unittest.TestCase):

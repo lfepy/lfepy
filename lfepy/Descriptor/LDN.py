@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, descriptor_LDN
+import numpy as np
+from lfepy.Helper import descriptor_LDN
 
 
 def LDN(image, **kwargs):
@@ -26,7 +27,7 @@ def LDN(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LDN(image, mode='nh', mask='kirsch', msize=3, start=0.5)
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')

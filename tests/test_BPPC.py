@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.BPPC import BPPC  # Replace with the actual module name
+from lfepy.Descriptor import BPPC  # Replace with the actual module name
 
 
 class TestBPPC(unittest.TestCase):

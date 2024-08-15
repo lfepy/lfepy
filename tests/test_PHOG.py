@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.PHOG import PHOG  # Replace with the actual module name
+from lfepy.Descriptor import PHOG  # Replace with the actual module name
 
 
 class TestPHOG(unittest.TestCase):

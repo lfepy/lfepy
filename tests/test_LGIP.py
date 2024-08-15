@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.LGIP import LGIP  # Replace with the actual module name
+from lfepy.Descriptor import LGIP  # Replace with the actual module name
 
 
 class TestLGIP(unittest.TestCase):

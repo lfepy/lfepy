@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, convolve2d
+import numpy as np
+from scipy.signal import convolve2d
 
 
 def LDiPv(image, **kwargs):
@@ -20,7 +21,7 @@ def LDiPv(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LDiPv(image, mode='nh')
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')

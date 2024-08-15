@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, get_mapping, phase_cong3, descriptor_LBP
+import numpy as np
+from lfepy.Helper import get_mapping, phase_cong3, descriptor_LBP
 
 
 def BPPC(image, **kwargs):
@@ -20,7 +21,7 @@ def BPPC(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = BPPC(image, mode='nh')
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')

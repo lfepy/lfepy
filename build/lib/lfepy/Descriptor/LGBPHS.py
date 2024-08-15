@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, gabor_filter, descriptor_LBP, get_mapping
+import numpy as np
+from lfepy.Helper import gabor_filter, descriptor_LBP, get_mapping
 
 
 def LGBPHS(image, **kwargs):
@@ -26,7 +27,7 @@ def LGBPHS(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LGBPHS(image, mode='nh', uniformLBP=1, scaleNum=5, orienNum=8)
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
@@ -100,4 +101,3 @@ def LGBPHS(image, **kwargs):
         LGBPHS_hist = LGBPHS_hist / np.sum(LGBPHS_hist)
 
     return LGBPHS_hist, imgDesc
-

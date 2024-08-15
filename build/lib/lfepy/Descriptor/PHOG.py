@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, descriptor_PHOG, phogDescriptor_hist
+import numpy as np
+from lfepy.Helper import descriptor_PHOG, phogDescriptor_hist
 
 
 def PHOG(image, **kwargs):
@@ -26,7 +27,7 @@ def PHOG(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = PHOG(image, mode='nh', bin=8, angle=360, L=2)
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
@@ -86,4 +87,3 @@ def PHOG(image, **kwargs):
         PHOG_hist = PHOG_hist / np.sum(PHOG_hist)
 
     return PHOG_hist, imgDesc
-

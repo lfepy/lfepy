@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.LDN import LDN  # Replace with the actual module name
+from lfepy.Descriptor import LDN  # Replace with the actual module name
 
 
 class TestLDN(unittest.TestCase):

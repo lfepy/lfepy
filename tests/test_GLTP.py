@@ -1,8 +1,6 @@
 import unittest
 import numpy as np
-from scipy.signal import convolve2d
-from lfepy.Descriptor.GLTP import GLTP  # Replace with the actual module name
-from lfepy.Descriptor.GLTP import LTeP  # Replace with the actual module name
+from lfepy.Descriptor import GLTP  # Replace with the actual module name
 
 
 class TestGLTP(unittest.TestCase):

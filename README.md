@@ -40,13 +40,12 @@ pip install lfepy
 Basic Example
 ```python
 # Import the required packages
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
-from lfepy.Descriptor.LBP import LBP
+from lfepy.Descriptor import LBP
 
 # Read the image
-image = imread(PATH)
+image = imread("PATH")
 # Extract feature using a specified descriptor
 histogram, imgDesc = LBP(image, mode='nh', radius=1, mappingType='riu2')
 # Show the descriptor
@@ -56,7 +55,7 @@ plt.show()
 ```
 ![Alt text](example/Example.png)
 ## Documentation
-Comprehensive documentation for lfepy is available at [lfepydocs](documentation/). It includes:
+Comprehensive documentation for lfepy is available at [lfepydocs](documentation). It includes:
 
 - **Getting Started**
 - **API Reference**

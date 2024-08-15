@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, descriptor_LBP, get_mapping
+import numpy as np
+from lfepy.Helper import descriptor_LBP, get_mapping
 
 
 def LBP(image, **kwargs):
@@ -24,7 +25,7 @@ def LBP(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LBP(image, mode='nh', radius=1, mappingType='full')
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')

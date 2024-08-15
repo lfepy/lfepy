@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, descriptor_LBP, descriptor_LPQ
+import numpy as np
+from lfepy.Helper import descriptor_LBP, descriptor_LPQ
 
 
 def LFD(image, **kwargs):
@@ -20,7 +21,7 @@ def LFD(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LFD(image, mode='nh')
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')

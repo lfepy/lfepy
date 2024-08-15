@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.GDP2 import GDP2  # Replace with the actual module name
+from lfepy.Descriptor import GDP2  # Replace with the actual module name
 
 
 class TestGDP2(unittest.TestCase):

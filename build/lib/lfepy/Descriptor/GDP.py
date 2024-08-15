@@ -1,4 +1,6 @@
-from lfepy.Helper.helper import np, convolve2d, get_mapping
+import numpy as np
+from scipy.signal import convolve2d
+from lfepy.Helper import get_mapping
 
 
 def GDP(image, **kwargs):
@@ -24,7 +26,7 @@ def GDP(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = GDP(image, mode='nh', mask='sobel', t=22.5)
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')

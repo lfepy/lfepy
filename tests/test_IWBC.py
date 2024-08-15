@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.IWBC import IWBC  # Replace with the actual module name
+from lfepy.Descriptor import IWBC  # Replace with the actual module name
 
 
 class TestIWBC(unittest.TestCase):

@@ -1,7 +1,6 @@
 import unittest
 import numpy as np
-from scipy.signal import convolve2d
-from lfepy.Descriptor.LFD import LFD  # Replace with the actual module name
+from lfepy.Descriptor import LFD  # Replace with the actual module name
 
 
 class TestLFD(unittest.TestCase):

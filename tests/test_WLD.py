@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from lfepy.Descriptor.WLD import WLD  # Replace with the actual module name
+from lfepy.Descriptor import WLD  # Replace with the actual module name
 
 
 class TestWLD(unittest.TestCase):

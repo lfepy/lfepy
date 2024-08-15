@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, gabor_filter
+import numpy as np
+from lfepy.Helper import gabor_filter
 from lfepy.Descriptor.LTrP import LTrP
 
 
@@ -21,7 +22,7 @@ def LGTrP(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LGTrP(image, mode='nh')
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='lfepy',
-    version='1.0.2',
+    version='1.0.4',
     author='Dr. Prof. Khalid M. Hosny, BSc. Mahmoud A. Mohamed, Dr. Rania Salama, Dr. Ahmed M. Elshewey',
     author_email='lfepy@gmail.com',
     description='lfepy is a Python package for local feature extraction',

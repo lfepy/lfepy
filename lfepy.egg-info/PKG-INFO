@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: lfepy
-Version: 1.0.2
+Version: 1.0.4
 Summary: lfepy is a Python package for local feature extraction
 Home-page: https://github.com/lfepy/lfepy
 Author: Dr. Prof. Khalid M. Hosny, BSc. Mahmoud A. Mohamed, Dr. Rania Salama, Dr. Ahmed M. Elshewey
@@ -57,13 +57,12 @@ pip install lfepy
 Basic Example
 ```python
 # Import the required packages
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.image import imread
-from lfepy.Descriptor.LBP import LBP
+from lfepy.Descriptor import LBP
 
 # Read the image
-image = imread(PATH)
+image = imread("PATH")
 # Extract feature using a specified descriptor
 histogram, imgDesc = LBP(image, mode='nh', radius=1, mappingType='riu2')
 # Show the descriptor
@@ -71,9 +70,8 @@ plt.imshow(imgDesc, cmap='gray')
 plt.axis('off')
 plt.show()
 ```
-![Alt text](example/Example.png)
 ## Documentation
-Comprehensive documentation for lfepy is available at [lfepydocs](documentation/). It includes:
+Comprehensive documentation for lfepy is available at [lfepydocs](documentation). It includes:
 
 - **Getting Started**
 - **API Reference**

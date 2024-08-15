@@ -1,4 +1,5 @@
-from lfepy.Helper.helper import np, gabor_filter
+import numpy as np
+from lfepy.Helper import gabor_filter
 
 
 def LGDiP(image, **kwargs):
@@ -20,7 +21,7 @@ def LGDiP(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = LGDiP(image, mode='nh')
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')

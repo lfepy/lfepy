@@ -1,5 +1,5 @@
-from lfepy.Helper.helper import (np, NewRDLBP_Image, view_as_windows, get_mapping_info_ct, NILBP_Image_ct,
-                                 RDLBP_Image_SmallestRadiusOnly)
+import numpy as np
+from lfepy.Helper import (NewRDLBP_Image, view_as_windows, get_mapping_info_ct, NILBP_Image_ct, RDLBP_Image_SmallestRadiusOnly)
 
 
 def MRELBP(image, **kwargs):
@@ -25,7 +25,7 @@ def MRELBP(image, **kwargs):
     :example:
         >>> from PIL import Image
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open(Path)
+        >>> image = Image.open("Path")
         >>> histogram, imgDesc = MRELBP(image, mode='nh')
         >>> plt.imshow(imgDesc[0]['fea']['NILBPImage'], cmap='gray')
         >>> plt.axis('off')
