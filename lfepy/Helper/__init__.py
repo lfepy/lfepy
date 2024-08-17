@@ -34,7 +34,7 @@ __all__ = ["bin_matrix", "cirInterpSingleRadius_ct", "cirInterpSingleRadiusNew",
            "phogDescriptor_hist", "RDLBP_Image_SmallestRadiusOnly", "roundn", "view_as_windows"]
 
 # __init__.py in the main package
-__version__ = '1.0.6'
+__version__ = '1.0.7'
 __author__ = ["Dr. Prof. Khalid M. Hosny", "BSc. Mahmoud A. Mohamed", "Dr. Rania Salama", "Dr. Ahmed M. Elshewey"]
 __license__ = 'MIT'
 

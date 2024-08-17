@@ -65,4 +65,4 @@ Comprehensive documentation for lfepy is available at [lfepydocs](documentation)
 lfepy is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for more details.
 
 ## Contact
-For any questions or support, please contact us at lfepy@gmail.com or visit our [GitHub](https://github.com/lfepy/lfepy) Issues page.
+For any questions or support, please contact us at lfepython@gmail.com or visit our [GitHub](https://github.com/lfepy/lfepy) Issues page.

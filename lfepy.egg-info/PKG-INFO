@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: lfepy
-Version: 1.0.6
+Version: 1.0.7
 Summary: lfepy is a Python package for local feature extraction.
 Home-page: https://github.com/lfepy/lfepy
 Author: Dr. Prof. Khalid M. Hosny, BSc. Mahmoud A. Mohamed, Dr. Rania Salama, Dr. Ahmed M. Elshewey
@@ -82,4 +82,4 @@ Comprehensive documentation for lfepy is available at [lfepydocs](documentation)
 lfepy is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for more details.
 
 ## Contact
-For any questions or support, please contact us at lfepy@gmail.com or visit our [GitHub](https://github.com/lfepy/lfepy) Issues page.
+For any questions or support, please contact us at lfepython@gmail.com or visit our [GitHub](https://github.com/lfepy/lfepy) Issues page.
