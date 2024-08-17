@@ -5,38 +5,28 @@ def monofilt(im, nscale, minWaveLength, mult, sigmaOnf, orientWrap=0, thetaPhase
     """
     Apply a multiscale directional filter bank to a 2D grayscale image using Log-Gabor filters.
 
-    :param im: 2D grayscale image.
-    :type im: numpy.ndarray
-    :param nscale: Number of scales in the filter bank.
-    :type nscale: int
-    :param minWaveLength: Minimum wavelength of the filters.
-    :type minWaveLength: float
-    :param mult: Scaling factor between consecutive scales.
-    :type mult: float
-    :param sigmaOnf: Bandwidth of the Log-Gabor filter.
-    :type sigmaOnf: float
-    :param orientWrap: If 1, wrap orientations to the range [0, π]. Default is 0 (no wrapping).
-    :type orientWrap: int, optional
-    :param thetaPhase: If 1, compute phase angles (theta and psi). Default is 1.
-    :type thetaPhase: int, optional
+    Args:
+        im (numpy.ndarray): 2D grayscale image.
+        nscale (int): Number of scales in the filter bank.
+        minWaveLength (float): Minimum wavelength of the filters.
+        mult (float): Scaling factor between consecutive scales.
+        sigmaOnf (float): Bandwidth of the Log-Gabor filter.
+        orientWrap (int, optional): If 1, wrap orientations to the range [0, π]. Default is 0 (no wrapping).
+        thetaPhase (int, optional): If 1, compute phase angles (theta and psi). Default is 1.
 
-    :returns: A tuple containing:
-        - f: Filter responses in the spatial domain.
-        - h1f: x-direction filter responses in the spatial domain.
-        - h2f: y-direction filter responses in the spatial domain.
-        - A: Amplitude of the filter responses.
-        - theta: Phase angle of the filter responses, if `thetaPhase` is 1.
-        - psi: Orientation angle of the filter responses, if `thetaPhase` is 1.
+    Returns:
+        tuple: A tuple containing:
+            f (list of numpy.ndarray): Filter responses in the spatial domain.
+            h1f (list of numpy.ndarray): x-direction filter responses in the spatial domain.
+            h2f (list of numpy.ndarray): y-direction filter responses in the spatial domain.
+            A (list of numpy.ndarray): Amplitude of the filter responses.
+            theta (list of numpy.ndarray, optional): Phase angles of the filter responses, if `thetaPhase` is 1.
+            psi (list of numpy.ndarray, optional): Orientation angles of the filter responses, if `thetaPhase` is 1.
 
-    :rtype: tuple
-        - f (list of numpy.ndarray): Filter responses.
-        - h1f (list of numpy.ndarray): x-direction filter responses.
-        - h2f (list of numpy.ndarray): y-direction filter responses.
-        - A (list of numpy.ndarray): Amplitude responses.
-        - theta (list of numpy.ndarray, optional): Phase angles.
-        - psi (list of numpy.ndarray, optional): Orientation angles.
+    Raises:
+        ValueError: If the input image is not 2D.
 
-    :example:
+    Example:
         >>> import numpy as np
         >>> from scipy import ndimage
         >>> image = np.random.rand(100, 100)
@@ -47,7 +37,7 @@ def monofilt(im, nscale, minWaveLength, mult, sigmaOnf, orientWrap=0, thetaPhase
         >>> f, h1f, h2f, A, theta, psi = monofilt(image, nscale, minWaveLength, mult, sigmaOnf)
         >>> print(len(f))
         4
-        >>> print(f[0].shape)  # Shape of the response for the first scale
+        >>> print(f[0].shape)
         (100, 100)
     """
     if np.ndim(im) == 2:

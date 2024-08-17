@@ -5,39 +5,44 @@ def LGIP(image, **kwargs):
     """
     Compute Local Gradient Increasing Pattern (LGIP) descriptors and histograms from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing LGIP extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing LGIP extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
 
-    :returns:
-        - LGIP_hist: Histogram(s) of LGIP descriptors.
-        - imgDesc: LGIP descriptors themselves.
-    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
+    Returns:
+        tuple: A tuple containing:
+            LGIP_hist (numpy.ndarray): Histogram(s) of LGIP descriptors.
+            imgDesc (numpy.ndarray): LGIP descriptors themselves.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If the `image` is not a valid `numpy.ndarray`.
+        ValueError: If the `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = LGIP(image, mode='nh')
+
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         Z. Lubing, and W. Han,
-        Local gradient increasing pattern for facial expression recognition,
-        Image Processing (ICIP), 2012 19th IEEE International Conference on,
-        IEEE, 2012, pp. 2601-2604.
+        Local Gradient Increasing Pattern for Facial Expression Recognition,
+        Image Processing (ICIP), 2012 19th IEEE International Conference on, IEEE,
+        2012, pp. 2601-2604.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

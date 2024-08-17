@@ -5,19 +5,18 @@ def low_pass_filter(size, cutoff, n):
     """
     Creates a low-pass Butterworth filter.
 
-    :param size: The size of the filter. If a single integer is provided, the filter will be square with that size.
-    :type size: tuple of int
-    :param cutoff: The cutoff frequency for the filter. Must be between 0 and 0.5.
-    :type cutoff: float
-    :param n: The order of the Butterworth filter. Must be an integer greater than or equal to 1.
-    :type n: int
+    Args:
+        size (tuple of int or int): The size of the filter. If a single integer is provided, the filter will be square with that size.
+        cutoff (float): The cutoff frequency for the filter. Must be between 0 and 0.5.
+        n (int): The order of the Butterworth filter. Must be an integer greater than or equal to 1.
 
-    :returns: The low-pass Butterworth filter in the frequency domain.
-    :rtype: np.ndarray
+    Returns:
+        np.ndarray: The low-pass Butterworth filter in the frequency domain.
 
-    :raises ValueError: If `cutoff` is not in the range [0, 0.5], or if `n` is not an integer greater than or equal to 1.
+    Raises:
+        ValueError: If `cutoff` is not in the range [0, 0.5], or if `n` is not an integer greater than or equal to 1.
 
-    :example:
+    Example:
         >>> filter_size = (256, 256)
         >>> cutoff_frequency = 0.1
         >>> order = 2

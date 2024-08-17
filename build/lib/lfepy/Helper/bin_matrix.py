@@ -6,25 +6,19 @@ def bin_matrix(A, E, G, angle, bin):
     """
     Compute the bin matrix for a given angle map and gradient magnitude.
 
-    :param A: Angle map of the gradient directions.
-    :type A: numpy.ndarray
-    :param E: Binary edge map where edges are marked.
-    :type E: numpy.ndarray
-    :param G: Gradient magnitude map.
-    :type G: numpy.ndarray
-    :param angle: Total range of angles in degrees (e.g., 360 for full circle).
-    :type angle: float
-    :param bin: Number of bins to divide the angle range into.
-    :type bin: int
+    Args:
+        A (numpy.ndarray): Angle map of the gradient directions.
+        E (numpy.ndarray): Binary edge map where edges are marked.
+        G (numpy.ndarray): Gradient magnitude map.
+        angle (float): Total range of angles in degrees (e.g., 360 for full circle).
+        bin (int): Number of bins to divide the angle range into.
 
-    :returns:
-        - bm: Bin matrix with assigned bins for each pixel.
-        - bv: Gradient magnitude values corresponding to the bin matrix.
-    :rtype:
-        - bm: numpy.ndarray
-        - bv: numpy.ndarray
+    Returns:
+        tuple:
+            bm (numpy.ndarray): Bin matrix with assigned bins for each pixel.
+            bv (numpy.ndarray): Gradient magnitude values corresponding to the bin matrix.
 
-    :example:
+    Example:
         >>> import numpy as np
         >>> A = np.array([[0, 45], [90, 135]])
         >>> E = np.array([[1, 1], [1, 1]])

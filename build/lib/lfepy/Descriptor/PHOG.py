@@ -6,45 +6,47 @@ def PHOG(image, **kwargs):
     """
     Compute Pyramid Histogram of Oriented Gradients (PHOG) histograms and descriptors from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing PHOG extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
-    :param kwargs.bin: Number of bins for the histogram. Default: 8.
-    :type kwargs.bin: int
-    :param kwargs.angle: Range of gradient angles. Default: 360.
-    :type kwargs.angle: int
-    :param kwargs.L: Number of pyramid levels. Default: 2.
-    :type kwargs.L: int
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing PHOG extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
+            bin (int): Number of bins for the histogram. Default is 8.
+            angle (int): Range of gradient angles in degrees. Default is 360.
+            L (int): Number of pyramid levels. Default is 2.
 
-    :returns:
-        - PHOG_hist: Histogram of PHOG descriptors.
-        - imgDesc: List of dictionaries containing PHOG descriptors.
-    :rtype: tuple of (numpy.ndarray, list of dicts)
+    Returns:
+        tuple: A tuple containing:
+            PHOG_hist (numpy.ndarray): Histogram of PHOG descriptors.
+            imgDesc (list of dicts): List of dictionaries containing PHOG descriptors for each pyramid level.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If `image` is not a valid `numpy.ndarray`.
+        ValueError: If `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = PHOG(image, mode='nh', bin=8, angle=360, L=2)
+
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         A. Bosch, A. Zisserman, and X. Munoz,
         Representing shape with a spatial pyramid kernel,
-        Proceedings of the 6th ACM international conference on Image and video retrieval,
-        ACM, 2007, pp. 401-408.
+        Proceedings of the 6th ACM international conference on Image and video retrieval, ACM,
+        2007, pp. 401-408.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

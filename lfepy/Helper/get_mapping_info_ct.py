@@ -4,23 +4,23 @@ from lfepy.Helper.get_mapping_mrelbp import get_mapping_mrelbp
 
 def get_mapping_info_ct(lbp_radius, lbp_points, lbp_method):
     """
-    Retrieve or generate a mapping for circular (center-symmetric) LBP.
+    Retrieve or generate a mapping for circular (center-symmetric) Local Binary Patterns (LBP).
 
-    :param lbp_radius: The radius of the LBP.
-    :type lbp_radius: int
-    :param lbp_points: The number of sampling points in the LBP.
-    :type lbp_points: int
-    :param lbp_method: The method for LBP mapping.
-    :type lbp_method: str
+    Args:
+        lbp_radius (int): The radius of the LBP.
+        lbp_points (int): The number of sampling points in the LBP.
+        lbp_method (str): The method for LBP mapping. Options include:
+            'LBPriu2'
+            'MELBPVary'
+            'AELBPVary'
 
-    :returns: A dictionary with the mapping information.
-    :rtype: dict
-    :returns:
-        - 'table': The mapping table.
-        - 'samples': The number of sampling points.
-        - 'num': The number of patterns in the resulting LBP code.
+    Returns:
+        dict: A dictionary containing the mapping information with the following keys:
+            'table' (numpy.ndarray): The mapping table.
+            'samples' (int): The number of sampling points.
+            'num' (int): The number of patterns in the resulting LBP code.
 
-    :example:
+    Example:
         >>> get_mapping_info_ct(1, 24, 'LBPriu2')
         {'table': array([...]), 'samples': 24, 'num': 26}
     """

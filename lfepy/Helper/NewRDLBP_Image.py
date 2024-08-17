@@ -6,26 +6,23 @@ def NewRDLBP_Image(img, imgPre, lbpRadius, lbpRadiusPre, lbpPoints, mapping=None
     """
     Compute the Radial Difference Local Binary Pattern (RDLBP) between two images.
 
-    :param img: 2D grayscale image.
-    :type img: numpy.ndarray
-    :param imgPre: 2D grayscale image for comparison.
-    :type imgPre: numpy.ndarray
-    :param lbpRadius: Radius of the circular neighborhood for the current image.
-    :type lbpRadius: int
-    :param lbpRadiusPre: Radius of the circular neighborhood for the comparison image.
-    :type lbpRadiusPre: int
-    :param lbpPoints: Number of points used in the LBP pattern.
-    :type lbpPoints: int
-    :param mapping: Mapping dictionary for converting the LBP result to a different bin scheme.
-        If provided, must contain 'num' (number of bins) and 'table' (mapping from old bin to new bin).
-    :type mapping: dict or None, optional
-    :param mode: Mode for output. 'h' or 'hist' for histogram of the RDLBP, 'nh' for normalized histogram. Default is 'h'.
-    :type mode: str, optional
+    Args:
+        img (numpy.ndarray): 2D grayscale image.
+        imgPre (numpy.ndarray): 2D grayscale image for comparison.
+        lbpRadius (int): Radius of the circular neighborhood for the current image.
+        lbpRadiusPre (int): Radius of the circular neighborhood for the comparison image.
+        lbpPoints (int): Number of points used in the LBP pattern.
+        mapping (dict or None, optional): Mapping dictionary for converting the LBP result to a different bin scheme.
+            If provided, must contain 'num' (number of bins) and 'table' (mapping from old bin to new bin). Default is None.
+        mode (str, optional): Mode for output. 'h' or 'hist' for histogram of the RDLBP, 'nh' for normalized histogram. Default is 'h'.
 
-    :returns: RDLBP descriptor, either as a histogram or image depending on the `mode` parameter.
-    :rtype: numpy.ndarray
+    Returns:
+        numpy.ndarray: RDLBP descriptor, either as a histogram or image depending on the `mode` parameter.
 
-    :example:
+    Raises:
+        ValueError: If `mapping` is provided but does not contain the required keys.
+
+    Example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()
@@ -35,7 +32,7 @@ def NewRDLBP_Image(img, imgPre, lbpRadius, lbpRadiusPre, lbpPoints, mapping=None
         >>> lbpPoints = 8
         >>> hist = NewRDLBP_Image(img, imgPre, lbpRadius, lbpRadiusPre, lbpPoints, mode='nh')
         >>> print(hist.shape)
-        (256,)  # Example output shape for normalized histogram
+        (256,)
     """
     # Extract circularly interpolated blocks from the current image
     blocks1, _, _ = cirInterpSingleRadiusNew(img, lbpPoints, lbpRadius)

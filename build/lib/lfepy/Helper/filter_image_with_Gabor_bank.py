@@ -8,21 +8,30 @@ def filter_image_with_Gabor_bank(image, filter_bank, down_sampling_factor=64):
     """
     Apply a Gabor filter bank to an image and return the filtered features.
 
-    :param image: Input image to be filtered. Should be a 2D numpy array.
-    :type image: np.ndarray
-    :param filter_bank: Dictionary containing Gabor filter bank with 'spatial' and 'freq' keys.
-    :type filter_bank: dict
-    :param down_sampling_factor: Factor for down-sampling the filtered images. Default is 64.
-    :type down_sampling_factor: int, optional
+    This function applies a bank of Gabor filters to an input image, performs down-sampling,
+    and returns the concatenated features obtained from the filtered image. Gabor's filters are
+    used for texture analysis and feature extraction in image processing.
 
-    :returns: Concatenated filtered features from the Gabor filter bank.
-    :rtype: np.ndarray
+    Args:
+        image (np.ndarray): Input image to be filtered. Should be a 2D numpy array representing a grayscale image.
+        filter_bank (dict): Dictionary containing Gabor filter bank with the following keys:
+            'spatial': A list of 2D arrays representing spatial domain Gabor filters.
+            'freq': A list of 2D arrays representing frequency domain Gabor filters.
+            'orient': Number of orientations in the filter bank.
+            'scales': Number of scales in the filter bank.
+        down_sampling_factor (int, optional): Factor for down-sampling the filtered images. Default is 64.
 
-    :raises ValueError: If the inputs are not as expected or dimensions do not match.
+    Returns:
+        np.ndarray: Concatenated filtered features from the Gabor filter bank, flattened into a 1D array.
 
-    :example:
+    Raises:
+        ValueError: If the inputs are not as expected, dimensions do not match, or required fields are missing in the filter bank.
+
+    Example:
         >>> import numpy as np
         >>> from skimage.data import camera
+        >>> from skimage.transform import resize
+        >>> from scipy.fftpack import fft2, ifft2
         >>> image = camera()
         >>> filter_bank = construct_Gabor_filters(num_of_orient=8, num_of_scales=5, size1=31)
         >>> features = filter_image_with_Gabor_bank(image, filter_bank)

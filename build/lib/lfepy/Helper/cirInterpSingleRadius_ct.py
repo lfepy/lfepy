@@ -5,28 +5,29 @@ def cirInterpSingleRadius_ct(img, lbpPoints, lbpRadius):
     """
     Perform circular interpolation for a single radius in the LBP (Local Binary Pattern) computation.
 
-    :param img: 2D grayscale image.
-    :type img: numpy.ndarray
-    :param lbpPoints: Number of points used in the LBP pattern.
-    :type lbpPoints: int
-    :param lbpRadius: Radius of the circular neighborhood for computing LBP.
-    :type lbpRadius: int
+    Args:
+        img (numpy.ndarray): 2D grayscale image.
+        lbpPoints (int): Number of points used in the LBP pattern.
+        lbpRadius (int): Radius of the circular neighborhood for computing LBP.
 
-    :returns:
-        - blocks (numpy.ndarray): Array of size (lbpPoints, imgNewH * imgNewW) containing the interpolated pixel values.
-        - dx (int): Width of the output blocks.
-        - dy (int): Height of the output blocks.
-    :rtype: tuple
+    Returns:
+        tuple:
+            blocks (numpy.ndarray): Array of size (lbpPoints, imgNewH * imgNewW) containing the interpolated pixel values.
+            dx (int): Width of the output blocks.
+            dy (int): Height of the output blocks.
 
-    :example:
+    Raises:
+        ValueError: If the input image is smaller than the required size of (2*radius + 1) x (2*radius + 1).
+
+    Example:
         >>> import numpy as np
         >>> from skimage import data
-        >>> img = data.camera()  # Example grayscale image
+        >>> img = data.camera()
         >>> lbpPoints = 8
         >>> lbpRadius = 1
         >>> blocks, dx, dy = cirInterpSingleRadius_ct(img, lbpPoints, lbpRadius)
-        >>> print(blocks.shape)  # Shape of the blocks array
-        (8, 9216)  # Example output shape
+        >>> print(blocks.shape)
+        (8, 9216)
     """
     # Get image dimensions
     imgH, imgW = img.shape

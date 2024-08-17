@@ -6,46 +6,50 @@ def LPQ(image, **kwargs):
     """
     Compute Local Phase Quantization (LPQ) histograms and descriptors from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing LPQ extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
-    :param kwargs.windowSize: Size of the sliding window for LPQ. Default: 5.
-    :type kwargs.windowSize: int
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing LPQ extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
+            windowSize (int): Size of the sliding window for LPQ. Default is 5.
 
-    :returns:
-        - LPQ_hist: Histogram of LPQ descriptors.
-        - imgDesc: LPQ descriptors.
-    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
+    Returns:
+        tuple: A tuple containing:
+            LPQ_hist (numpy.ndarray): Histogram of LPQ descriptors.
+            imgDesc (numpy.ndarray): LPQ descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If the `image` is not a valid `numpy.ndarray`.
+        ValueError: If the `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = LPQ(image, mode='nh', windowSize=5)
+
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         V. Ojansivu, and J. Heikkilä,
-        Blur insensitive texture classification using local phase quantization,
-        International conference on image and signal processing,
-        Springer, 2008, pp. 236-243.
+        Blur Insensitive Texture Classification Using Local Phase Quantization,
+        International Conference on Image and Signal Processing, Springer,
+        2008, pp. 236-243.
 
         A. Dhall, A. Asthana, R. Goecke, and T. Gedeon,
-        Emotion recognition using PHOG and LPQ features,
-        Automatic Face & Gesture Recognition and Workshops (FG 2011), 2011 IEEE International Conference on,
-        IEEE, 2011, pp. 878-883.
+        Emotion Recognition Using PHOG and LPQ Features,
+        Automatic Face & Gesture Recognition and Workshops (FG 2011), IEEE,
+        2011, pp. 878-883.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

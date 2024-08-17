@@ -5,21 +5,23 @@ def get_mapping(samples, mappingtype):
     """
     Generate a mapping table for Local Binary Patterns (LBP) codes.
 
-    :param samples: The number of sampling points in the LBP.
-    :type samples: int
-    :param mappingtype: The type of LBP mapping ('u2', 'ri', 'riu2').
-    :type mappingtype: str
+    Args:
+        samples (int): The number of sampling points in the LBP.
+        mappingtype (str): The type of LBP mapping. Options are:
+            'u2' (uniform 2)
+            'ri' (rotation invariant)
+            'riu2' (uniform and rotation invariant)
 
-    :returns: A dictionary with the following keys:
-    :rtype: dict
-    :returns:
-        - 'table': The mapping table.
-        - 'samples': The number of sampling points.
-        - 'num': The number of patterns in the resulting LBP code.
+    Returns:
+        dict: A dictionary with the following keys:
+            'table' (numpy.ndarray): The mapping table.
+            'samples' (int): The number of sampling points.
+            'num' (int): The number of patterns in the resulting LBP code.
 
-    :raises ValueError: If an unsupported mapping type is provided.
+    Raises:
+        ValueError: If an unsupported mapping type is provided.
 
-    :example:
+    Example:
         >>> get_mapping(8, 'u2')
         {'table': array([...]), 'samples': 8, 'num': 59}
     """

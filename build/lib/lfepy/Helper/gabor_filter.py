@@ -7,17 +7,15 @@ def gabor_filter(image, orienNum, scaleNum):
     """
     Apply a Gabor filter bank to an image and organize the results into a multidimensional array.
 
-    :param image: Input image to be filtered. Should be a 2D numpy array.
-    :type image: np.ndarray
-    :param orienNum: Number of orientation filters in the Gabor filter bank.
-    :type orienNum: int
-    :param scaleNum: Number of scale filters in the Gabor filter bank.
-    :type scaleNum: int
+    Args:
+        image (numpy.ndarray): Input image to be filtered. Should be a 2D numpy array.
+        orienNum (int): Number of orientation filters in the Gabor filter bank.
+        scaleNum (int): Number of scale filters in the Gabor filter bank.
 
-    :returns: Multidimensional array containing the Gabor magnitude responses. Shape is (height, width, orienNum, scaleNum).
-    :rtype: np.ndarray
+    Returns:
+        numpy.ndarray: Multidimensional array containing the Gabor magnitude responses. Shape is (height, width, orienNum, scaleNum).
 
-    :example:
+    Example:
         >>> import numpy as np
         >>> from skimage.data import camera
         >>> image = camera()

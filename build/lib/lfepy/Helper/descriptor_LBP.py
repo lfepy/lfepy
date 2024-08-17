@@ -7,27 +7,35 @@ def descriptor_LBP(*varargin):
     """
     Compute the Local Binary Pattern (LBP) of an image with various options for radius, neighbors, mapping, and mode.
 
-    :param image: The input image.
-    :type image: numpy.ndarray
-    :param radius: The radius of the LBP.
-    :type radius: int
-    :param neighbors: The number of sampling points in the LBP.
-    :type neighbors: int
-    :param mapping: The mapping information.
-    :type mapping: dict or None
-    :param mode: The mode for LBP calculation. Options are 'h' (histogram), 'hist' (histogram), or 'nh' (normalized histogram).
-    :type mode: str
+    The function computes the LBP of a grayscale image based on the provided parameters, including radius, number of
+    neighbors, and optional mapping and mode settings. It returns either the LBP histogram or the LBP code image.
 
-    :returns: A tuple containing:
-        - result: The LBP histogram or LBP image.
-        - codeImage: The LBP code image.
-    :rtype: tuple
+    Args:
+        image (numpy.ndarray): The input image, expected to be a 2D numpy array (grayscale).
+        radius (int, optional): The radius of the LBP. Determines the distance of the sampling points from the center pixel.
+        neighbors (int, optional): The number of sampling points in the LBP.
+        mapping (dict or None, optional): The mapping information for LBP codes. Should contain 'samples' and 'table' if provided. If `None`, no mapping is applied.
+        mode (str, optional): The mode for LBP calculation. Options are:
+            'h' (histogram): Returns LBP histogram.
+            'hist' (histogram): Same as 'h', returns LBP histogram.
+            'nh' (normalized histogram): Returns normalized LBP histogram. Default is 'nh'.
 
-    :raises ValueError: If the number of input arguments is incorrect or other validation fails.
+    Returns:
+        tuple: A tuple containing:
+            result (numpy.ndarray): The LBP histogram or LBP image based on the `mode` parameter.
+            codeImage (numpy.ndarray): The LBP code image, which contains the LBP codes for each pixel.
 
-    :example:
+    Raises:
+        ValueError: If the number of input arguments is incorrect or if the provided `mapping` is incompatible with the number of `neighbors`.
+        ValueError: If the input image is too small for the given `radius`.
+        ValueError: If the dimensions of `spoints` are not valid.
+
+    Example:
+        >>> import numpy as np
         >>> image = np.random.rand(100, 100)
         >>> result, codeImage = descriptor_LBP(image, 1, 8, None, 'nh')
+        >>> print(result)
+        >>> print(codeImage)
     """
     # Check the number of input arguments
     if len(varargin) < 1 or len(varargin) > 5:

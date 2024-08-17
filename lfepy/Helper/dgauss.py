@@ -4,17 +4,21 @@ from lfepy.Helper.gauss import gauss
 
 def dgauss(x, sigma):
     """
-    Compute the derivative of the Gaussian (normal) distribution with respect to x.
+    Compute the derivative of the Gaussian function with respect to x.
 
-    :param x: The point or points at which to evaluate the derivative.
-    :type x: float or numpy.ndarray
-    :param sigma: The standard deviation of the Gaussian distribution.
-    :type sigma: float
+    This function calculates the derivative of the Gaussian function, also known as the
+    Gaussian derivative, which is useful in various image processing tasks such as edge
+    detection and feature extraction. The derivative is computed based on the standard
+    deviation of the Gaussian distribution.
 
-    :returns: The derivative of the Gaussian function at the given point(s).
-    :rtype: float or numpy.ndarray
+    Args:
+        x (float or numpy.ndarray): The point or points at which to evaluate the derivative of the Gaussian function.
+        sigma (float): The standard deviation of the Gaussian distribution, which controls the width of the Gaussian curve.
 
-    :example:
+    Returns:
+        float or numpy.ndarray: The derivative of the Gaussian function at the given point(s). The type matches the input `x` type.
+
+    Example:
         >>> dgauss(0, 1)
         -0.0
         >>> dgauss(np.array([0, 1, 2]), 1)

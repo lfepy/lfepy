@@ -3,17 +3,20 @@ import numpy as np
 
 def roundn(x, n):
     """
-    Round a number to a specified number of decimal places.
+    Round a number or array of numbers to a specified number of decimal places.
 
-    :param x: The number or array of numbers to be rounded.
-    :type x: float or array-like
-    :param n: The number of decimal places to round to. If `n` is negative, `x` is rounded to the left of the decimal point. If `n` is zero, `x` is rounded to the nearest integer.
-    :type n: int
+    The function rounds the input `x` to `n` decimal places. If `n` is negative, it rounds to the left of the decimal point.
+    If `n` is zero, it rounds to the nearest integer.
 
-    :returns: The rounded number or array of numbers.
-    :rtype: float or array-like
+    Args:
+        x (float or array-like): The number or array of numbers to be rounded.
+        n (int): The number of decimal places to round to. If `n` is negative, `x` is rounded to the left of the decimal point.
+                 If `n` is zero, `x` is rounded to the nearest integer.
 
-    :example:
+    Returns:
+        float or array-like: The rounded number or array of numbers.
+
+    Examples:
         >>> roundn(123.456, 2)
         123.46
         >>> roundn(123.456, -1)

@@ -6,45 +6,50 @@ def MBC(image, **kwargs):
     """
     Compute Monogenic Binary Coding (MBC) histograms and descriptors from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing MBC extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
-    :param kwargs.mbcMode: Mode for MBC computation. Options: 'A' (amplitude), 'O' (orientation), 'P' (phase). Default: 'A'.
-    :type kwargs.mbcMode: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing MBC extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
+            mbcMode (str): Mode for MBC computation. Options: 'A' (amplitude), 'O' (orientation), 'P' (phase). Default is 'A'.
 
-    :returns:
-        - MBC_hist: Histogram of MBC descriptors.
-        - imgDesc: List of dictionaries containing MBC descriptors.
-    :rtype: tuple of (numpy.ndarray, list)
+    Returns:
+        tuple: A tuple containing:
+            MBC_hist (numpy.ndarray): Histogram of MBC descriptors.
+            imgDesc (list): List of dictionaries containing MBC descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If `image` is not a valid `numpy.ndarray`.
+        ValueError: If `mode` or `mbcMode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = MBC(image, mode='nh', mbcMode='A')
+
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         M. Yang, L. Zhang, S.C.-K. Shiu, and D. Zhang,
-        Monogenic binary coding: An efficient local feature extraction approach to face recognition.
-        IEEE Transactions on Information Forensics and Security 7 (2012) 1738-1751.
+        Monogenic binary coding: An efficient local feature extraction approach to face recognition,
+        IEEE Transactions on Information Forensics and Security,
+        7 (2012) 1738-1751.
 
         X.X. Xia, Z.L. Ying, and W.J. Chu,
         Facial Expression Recognition Based on Monogenic Binary Coding,
-        Applied Mechanics and Materials,
-        Trans Tech Publ, 2014, pp. 437-440.
+        Applied Mechanics and Materials, Trans Tech Publ,
+        2014, pp. 437-440.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

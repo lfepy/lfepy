@@ -6,42 +6,46 @@ def LBP(image, **kwargs):
     """
     Compute Local Binary Patterns (LBP) descriptors and histograms from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing LBP extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
-    :param kwargs.radius: Radius for LBP computation. Default: 1.
-    :type kwargs.radius: int
-    :param kwargs.mappingType: Type of mapping for LBP computation. Options: 'full', 'ri', 'u2', 'riu2'. Default: 'full'.
-    :type kwargs.mappingType: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing LBP extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
+            radius (int): Radius for LBP computation. Default is 1.
+            mappingType (str): Type of mapping for LBP computation. Options: 'full', 'ri', 'u2', 'riu2'. Default is 'full'.
 
-    :returns:
-        - LBP_hist: Histogram(s) of LBP descriptors.
-        - imgDesc: LBP descriptors.
-    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
+    Returns:
+        tuple: A tuple containing:
+            LBP_hist (numpy.ndarray): Histogram(s) of LBP descriptors.
+            imgDesc (numpy.ndarray): LBP descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If the `image` is not a valid `numpy.ndarray`.
+        ValueError: If the `mode` or `mappingType` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = LBP(image, mode='nh', radius=1, mappingType='full')
+
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         T. Ojala, M. Pietikainen, and T. Maenpaa,
-        Multi-resolution gray-scale and rotation invariant texture classification with local binary patterns.
-        IEEE Transactions on pattern analysis and machine intelligence 24 (2002) 971-987.
+        Multi-resolution gray-scale and rotation invariant texture classification with local binary patterns,
+        IEEE Transactions on Pattern Analysis and Machine Intelligence,
+        vol. 24, pp. 971-987, 2002.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

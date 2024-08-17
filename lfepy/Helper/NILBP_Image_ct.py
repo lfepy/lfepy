@@ -6,21 +6,18 @@ def NILBP_Image_ct(img, lbpPoints, mapping, mode, lbpRadius):
     """
     Compute the Neighborhood Binary Pattern (NILBP) descriptor for an image using circular interpolation.
 
-    :param img: 2D grayscale image.
-    :type img: numpy.ndarray
-    :param lbpPoints: Number of points used in the LBP pattern.
-    :type lbpPoints: int
-    :param mapping: A dictionary containing 'num' (number of bins) and 'table' (mapping table). If None, no mapping is applied.
-    :type mapping: dict or None
-    :param mode: Mode for output. 'h' or 'hist' for histogram of the NILBP, 'nh' for normalized histogram.
-    :type mode: str
-    :param lbpRadius: Radius of the circular neighborhood for computing LBP.
-    :type lbpRadius: int
+    Args:
+        img (numpy.ndarray): 2D grayscale image.
+        lbpPoints (int): Number of points used in the LBP pattern.
+        mapping (dict or None): A dictionary containing 'num' (number of bins) and 'table' (mapping table).
+            If None, no mapping is applied.
+        mode (str): Mode for output. 'h' or 'hist' for histogram of the NILBP, 'nh' for normalized histogram.
+        lbpRadius (int): Radius of the circular neighborhood for computing LBP.
 
-    :returns: NILBP descriptor, either as a histogram or image depending on the `mode` parameter.
-    :rtype: numpy.ndarray
+    Returns:
+        numpy.ndarray: NILBP descriptor, either as a histogram or image depending on the `mode` parameter.
 
-    :example:
+    Example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()
@@ -73,4 +70,3 @@ def NILBP_Image_ct(img, lbpPoints, mapping, mode, lbpRadius):
             result = result.astype(np.uint32)
 
     return result
-

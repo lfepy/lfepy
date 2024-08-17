@@ -5,19 +5,44 @@ def get_mapping_mrelbp(samples, mappingtype):
     """
     Generate a mapping table for Modified Rotation and Uniform Local Binary Patterns (MRELBP) codes.
 
-    :param samples: The number of sampling points in the LBP.
-    :type samples: int
-    :param mappingtype: The type of LBP mapping, supporting various uniform, rotation invariant, and modified patterns.
-    :type mappingtype: str
+    Args:
+        samples (int): The number of sampling points in the LBP.
+        mappingtype (str): The type of LBP mapping. Supports various uniform, rotation invariant, and modified patterns:
+            'u2'
+            'LBPu2'
+            'LBPVu2GMPD2'
+            'ri'
+            'riu2'
+            'MELBPVary'
+            'AELBPVary'
+            'GELBPEight'
+            'CLBPEight'
+            'ELBPEight'
+            'LBPriu2Eight'
+            'MELBPEight'
+            'AELBPEight'
+            'MELBPEightSch1'
+            'MELBPEightSch2'
+            'MELBPEightSch3'
+            'MELBPEightSch4'
+            'MELBPEightSch5'
+            'MELBPEightSch6'
+            'MELBPEightSch7'
+            'MELBPEightSch8'
+            'MELBPEightSch9'
+            'MELBPEightSch10'
+            'MELBPEightSch0'
+            'MELBPEightSch11'
+            'MELBPEightSch1Num'
+            'MELBPEightSch1Count'
 
-    :returns: A dictionary with the following keys:
-    :rtype: dict
-    :returns:
-        - 'table': The mapping table.
-        - 'samples': The number of sampling points.
-        - 'num': The number of patterns in the resulting LBP code.
+    Returns:
+        dict: A dictionary containing the mapping information with the following keys:
+            'table' (numpy.ndarray): The mapping table.
+            'samples' (int): The number of sampling points.
+            'num' (int): The number of patterns in the resulting LBP code.
 
-    :example:
+    Example:
         >>> get_mapping_mrelbp(8, 'u2')
         {'table': array([...]), 'samples': 8, 'num': 59}
     """

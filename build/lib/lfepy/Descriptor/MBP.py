@@ -5,39 +5,44 @@ def MBP(image, **kwargs):
     """
     Compute Median Binary Pattern (MBP) descriptors and histograms from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing MBP extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing MBP extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
 
-    :returns:
-        - MBP_hist: Histogram(s) of MBP descriptors.
-        - imgDesc: MBP descriptors.
-    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
+    Returns:
+        tuple: A tuple containing:
+            MBP_hist (numpy.ndarray): Histogram(s) of MBP descriptors.
+            imgDesc (numpy.ndarray): MBP descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If `image` is not a valid `numpy.ndarray`.
+        ValueError: If `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = MBP(image, mode='nh')
+
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         F. Bashar, A. Khan, F. Ahmed, and M.H. Kabir,
         Robust facial expression recognition based on median ternary pattern (MTP),
-        Electrical Information and Communication Technology (EICT), 2013 International Conference on,
-        IEEE, 2014, pp. 1-5.
+        Electrical Information and Communication Technology (EICT), 2013 International Conference on, IEEE,
+        2014, pp. 1-5.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

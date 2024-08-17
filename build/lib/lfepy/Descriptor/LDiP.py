@@ -6,39 +6,44 @@ def LDiP(image, **kwargs):
     """
     Compute Local Directional Pattern (LDiP) descriptors and histograms from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing LDiP extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing LDiP extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
 
-    :returns:
-        - LDiP_hist: Histogram(s) of LDiP descriptors.
-        - imgDesc: LDiP descriptors.
-    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
+    Returns:
+        tuple: A tuple containing:
+            LDiP_hist (numpy.ndarray): Histogram(s) of LDiP descriptors.
+            imgDesc (numpy.ndarray): LDiP descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If the `image` is not a valid `numpy.ndarray`.
+        ValueError: If the `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = LDiP(image, mode='nh')
+
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         T. Jabid, M.H. Kabir, and O. Chae,
-        Local directional pattern (LDP)–A robust image descriptor for object recognition,
-        Advanced Video and Signal Based Surveillance (AVSS), 2010 Seventh IEEE International Conference on,
-        IEEE, 2010, pp. 482-487.
+        Local Directional Pattern (LDP) – A Robust Image Descriptor for Object Recognition,
+        Advanced Video and Signal Based Surveillance (AVSS), 2010 Seventh IEEE International Conference on, IEEE,
+        2010, pp. 482-487.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

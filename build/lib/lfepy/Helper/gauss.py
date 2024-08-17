@@ -5,15 +5,14 @@ def gauss(x, sigma):
     """
     Calculate the value of the Gaussian (normal) distribution at a given point.
 
-    :param x: The point or points at which to evaluate the Gaussian function.
-    :type x: float or numpy.ndarray
-    :param sigma: The standard deviation of the Gaussian distribution.
-    :type sigma: float
+    Args:
+        x (float or numpy.ndarray): The point or points at which to evaluate the Gaussian function.
+        sigma (float): The standard deviation of the Gaussian distribution.
 
-    :returns: The value(s) of the Gaussian function at the given point(s).
-    :rtype: float or numpy.ndarray
+    Returns:
+        float or numpy.ndarray: The value(s) of the Gaussian function at the given point(s).
 
-    :example:
+    Example:
         >>> gauss(0, 1)
         0.3989422804014327
         >>> gauss(np.array([0, 1, 2]), 1)

@@ -6,25 +6,38 @@ def descriptor_LPQ(image, winSize=3, decorr=1, freqestim=1, mode='im'):
     """
     Compute the Local Phase Quantization (LPQ) descriptor for a given grayscale image.
 
-    :param image: Grayscale input image.
-    :type image: numpy.ndarray
-    :param winSize: Size of the window used for LPQ calculation (must be an odd number ≥ 3). Default is 3.
-    :type winSize: int
-    :param decorr: Flag to apply decorrelation. 0 for no decorrelation, 1 for decorrelation. Default is 1.
-    :type decorr: int
-    :param freqestim: Frequency estimation method. 1 for STFT uniform window, 2 for STFT Gaussian window, 3 for Gaussian derivative quadrature filter pair. Default is 1.
-    :type freqestim: int
-    :param mode: Specifies the output format. 'im' for image-like output, 'nh' for normalized histogram, 'h' for histogram. Default is 'im'.
-    :type mode: str
+    This function computes the LPQ descriptor, which captures local texture information
+    by analyzing the phase of the image's frequency components. The descriptor can be
+    computed using different frequency estimation methods and can be returned as an image
+    or a histogram based on the specified mode.
 
-    :returns: A tuple containing:
-        - LPQdesc: The LPQ descriptor of the image. Depending on `mode`, it could be an image or a histogram.
-        - freqRespAll: The frequency responses for all filter pairs.
-    :rtype: tuple
-        - LPQdesc (numpy.ndarray): Descriptor image or histogram.
-        - freqRespAll (numpy.ndarray): Frequency responses.
+    Args:
+        image (numpy.ndarray): Grayscale input image. Must be a 2D array.
+        winSize (int, optional): Size of the window used for LPQ calculation. Must be an odd number ≥ 3. Default is 3.
+        decorr (int, optional): Flag to apply decorrelation. 0 for no decorrelation, 1 for decorrelation. Default is 1.
+        freqestim (int, optional): Frequency estimation method.
+                                    1 for STFT uniform window,
+                                    2 for STFT Gaussian window,
+                                    3 for Gaussian derivative quadrature filter pair. Default is 1.
+        mode (str, optional): Specifies the output format.
+                              'im' for image-like output,
+                              'nh' for normalized histogram,
+                              'h' for histogram. Default is 'im'.
 
-    :example:
+    Returns:
+        tuple: A tuple containing:
+            LPQdesc (numpy.ndarray): The LPQ descriptor of the image. Depending on `mode`, it could be an image or a histogram.
+            freqRespAll (numpy.ndarray): The frequency responses for all filter pairs.
+
+    Raises:
+        ValueError: If:
+            'image' is not a 2D array.
+            'winSize' is not an odd number or less than 3.
+            'decorr' is not 0 or 1.
+            'freqestim' is not 1, 2, or 3.
+            'mode' is not one of 'nh', 'h', or 'im'.
+
+    Example:
         >>> import numpy as np
         >>> from scipy import ndimage
         >>> image = np.random.rand(100, 100)

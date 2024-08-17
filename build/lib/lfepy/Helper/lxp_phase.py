@@ -5,21 +5,20 @@ def lxp_phase(image, radius=1, neighbors=8, mapping=None, mode='h'):
     """
     Compute the Local X-Y Pattern (LXP) descriptor for a 2D grayscale image based on local phase information.
 
-    :param image: 2D grayscale image.
-    :type image: numpy.ndarray
-    :param radius: Radius of the circular neighborhood for computing the pattern. Default is 1.
-    :type radius: int, optional
-    :param neighbors: Number of directions or neighbors to consider. Default is 8.
-    :type neighbors: int, optional
-    :param mapping: Coordinates of neighbors relative to each pixel. If None, uses a default circular pattern. If a single digit, computes neighbors in a circular pattern based on the digit. Default is None.
-    :type mapping: numpy.ndarray or None, optional
-    :param mode: Mode for output. 'h' or 'hist' for histogram of the LXP, 'nh' for normalized histogram. Default is 'h'.
-    :type mode: str, optional
+    Args:
+        image (numpy.ndarray): 2D grayscale image.
+        radius (int, optional): Radius of the circular neighborhood for computing the pattern. Default is 1.
+        neighbors (int, optional): Number of directions or neighbors to consider. Default is 8.
+        mapping (numpy.ndarray or None, optional): Coordinates of neighbors relative to each pixel. If None, uses a default circular pattern. If a single digit, computes neighbors in a circular pattern based on the digit. Default is None.
+        mode (str, optional): Mode for output. 'h' or 'hist' for histogram of the LXP, 'nh' for normalized histogram. Default is 'h'.
 
-    :returns: LXP descriptor, either as a histogram or image depending on the `mode` parameter.
-    :rtype: numpy.ndarray
+    Returns:
+        numpy.ndarray: LXP descriptor, either as a histogram or image depending on the `mode` parameter.
 
-    :example:
+    Raises:
+        ValueError: If the input image is too small for the specified radius or the coordinates are invalid.
+
+    Example:
         >>> import numpy as np
         >>> from skimage import data
         >>> image = data.camera()

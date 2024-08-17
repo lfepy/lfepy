@@ -8,13 +8,13 @@ def gauss_gradient(sigma):
     """
     Generate a set of 2-D Gaussian derivative kernels for gradient computation at multiple orientations.
 
-    :param sigma: The standard deviation of the Gaussian distribution.
-    :type sigma: float
+    Args:
+        sigma (float): The standard deviation of the Gaussian distribution.
 
-    :returns: A 3D array where each 2D slice represents a Gaussian derivative kernel at a specific orientation.
-    :rtype: numpy.ndarray
+    Returns:
+        numpy.ndarray: A 3D array where each 2D slice represents a Gaussian derivative kernel at a specific orientation.
 
-    :example:
+    Example:
         >>> import matplotlib.pyplot as plt
         >>> sigma = 1.0
         >>> kernels = gauss_gradient(sigma)

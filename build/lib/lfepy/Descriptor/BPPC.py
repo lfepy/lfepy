@@ -6,39 +6,44 @@ def BPPC(image, **kwargs):
     """
     Compute Binary Phase Pattern Concatenation (BPPC) histograms and descriptors from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing BPPC extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing BPPC extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
 
-    :returns:
-        - BPPC_hist: Histogram(s) of BPPC descriptors.
-        - imgDesc: List of dictionaries containing BPPC descriptors.
-    :rtype: tuple of (numpy.ndarray, list)
+    Returns:
+        tuple: A tuple containing:
+            BPPC_hist (numpy.ndarray): Histogram(s) of BPPC descriptors.
+            imgDesc (list): List of dictionaries containing BPPC descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If the `image` is not a valid `numpy.ndarray`.
+        ValueError: If the `mode` in `kwargs` is not a valid option ('nh' or 'h').
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = BPPC(image, mode='nh')
+
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         S. Shojaeilangari, W.-Y. Yau, J. Li, and E.-K. Teoh,
         Feature extraction through binary pattern of phase congruency for facial expression recognition,
-        Control Automation Robotics & Vision (ICARCV), 2012 12th International Conference on,
-        IEEE, 2012, pp. 166-170.
+        in Control Automation Robotics & Vision (ICARCV), 2012 12th International Conference on, IEEE,
+        2012, pp. 166-170.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

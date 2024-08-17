@@ -5,41 +5,45 @@ def MTP(image, **kwargs):
     """
     Compute Median Ternary Pattern (MTP) descriptors and histograms from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing MTP extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
-    :param kwargs.t: Threshold value for MTP computation. Default: 10.
-    :type kwargs.t: float
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing MTP extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
+            t (float): Threshold value for MTP computation. Default is 10.
 
-    :returns:
-        - MTP_hist: Histogram(s) of MTP descriptors.
-        - imgDesc: List of dictionaries containing MTP descriptors for positive and negative thresholds.
-    :rtype: tuple of (numpy.ndarray, list of dicts)
+    Returns:
+        tuple: A tuple containing:
+            MTP_hist (numpy.ndarray): Histogram(s) of MTP descriptors.
+            imgDesc (list of dicts): List of dictionaries containing MTP descriptors for positive and negative thresholds.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If `image` is not a valid `numpy.ndarray`.
+        ValueError: If `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = MTP(image, mode='nh', t=10)
+
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         F. Bashar, A. Khan, F. Ahmed, and M.H. Kabir,
         Robust facial expression recognition based on median ternary pattern (MTP),
-        Electrical Information and Communication Technology (EICT), 2013 International Conference on,
-        IEEE, 2014, pp. 1-5.
+        Electrical Information and Communication Technology (EICT), 2013 International Conference on, IEEE,
+        2014, pp. 1-5.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

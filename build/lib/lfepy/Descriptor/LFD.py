@@ -6,39 +6,44 @@ def LFD(image, **kwargs):
     """
     Compute Local Frequency Descriptor (LFD) histograms and descriptors from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing LFD extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing LFD extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
 
-    :returns:
-        - LFD_hist: Histogram(s) of LFD descriptors.
-        - imgDesc: List of dictionaries containing LFD descriptors.
-    :rtype: tuple of (numpy.ndarray, list)
+    Returns:
+        tuple: A tuple containing:
+            LFD_hist (numpy.ndarray): Histogram(s) of LFD descriptors.
+            imgDesc (list): List of dictionaries containing LFD descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If the `image` is not a valid `numpy.ndarray`.
+        ValueError: If the `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = LFD(image, mode='nh')
+
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         Z. Lei, T. Ahonen, M. Pietikäinen, and S.Z. Li,
-        Local frequency descriptor for low-resolution face recognition,
-        Automatic Face & Gesture Recognition and Workshops (FG 2011), 2011 IEEE International Conference on,
-        IEEE, 2011, pp. 161-166.
+        Local Frequency Descriptor for Low-Resolution Face Recognition,
+        Automatic Face & Gesture Recognition and Workshops (FG 2011), IEEE,
+        2011, pp. 161-166.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

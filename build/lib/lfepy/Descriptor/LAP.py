@@ -5,38 +5,44 @@ def LAP(image, **kwargs):
     """
     Compute Local Arc Pattern (LAP) descriptors and histograms from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing LAP extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing LAP extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
 
-    :returns:
-        - LAP_hist: Histogram(s) of LAP descriptors.
-        - imgDesc: List of dictionaries containing LAP descriptors.
-    :rtype: tuple of (numpy.ndarray, list)
+    Returns:
+        tuple: A tuple containing:
+            LAP_hist (numpy.ndarray): Histogram(s) of LAP descriptors.
+            imgDesc (list): List of dictionaries containing LAP descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If the `image` is not a valid `numpy.ndarray`.
+        ValueError: If the `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = LAP(image, mode='nh')
+
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         M.S. Islam, and S. Auwatanamongkol,
-        Facial Expression Recognition using Local Arc Pattern.
-        Trends in Applied Sciences Research 9 (2014) 113.
+        Facial Expression Recognition using Local Arc Pattern,
+        Trends in Applied Sciences Research,
+        vol. 9, pp. 113, 2014.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

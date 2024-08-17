@@ -18,7 +18,7 @@
 
 ## Features
 
-- **Feature 1**: 27 different feature descriptors.
+- **Feature 1**: 27 different local descriptors.
 - **Feature 2**: Contains essential methods for feature extraction.
 - **Feature 3**: Can be used for computer vision and image processing tasks.
 

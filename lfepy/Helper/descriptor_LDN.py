@@ -6,31 +6,29 @@ from lfepy.Helper.gauss_gradient import gauss_gradient
 def descriptor_LDN(image, **kwargs):
     """
     Compute the Local Descriptor using Kirsch or Gaussian masks.
-    This function computes a local descriptor for an input image using different masks
-    based on the specified options. The masks include Kirsch masks for various sizes
-    or a Gaussian gradient mask. The size of the mask can be adjusted through the
-    `msize` parameter, and the `sigma` parameter controls the standard deviation for
-    the Gaussian mask.
 
-    :param image: The input image for which the descriptor is computed.
-    :type image: numpy.ndarray
-    :param kwargs: Additional optional parameters to customize the mask:
-        - 'mask' (str): Type of mask to use. Options are 'kirsch' (default) or 'gaussian'.
-        - 'msize' (int): Size of the Kirsch mask. Options are 3, 5, 7, 9, or 11 (default is 3).
-        - 'sigma' (float): Standard deviation for the Gaussian mask (default is 0.5).
-    :type kwargs: dict, optional
+    This function computes a local descriptor for an input image using different masks based on the specified options.
+    The masks include Kirsch masks for various sizes or a Gaussian gradient mask. The size of the mask can be adjusted
+    through the msize parameter, and the sigma parameter controls the standard deviation for the Gaussian mask.
 
-    :returns: The local descriptor matrix computed using the specified mask.
-    :rtype: numpy.ndarray
+    Args:
+        image (numpy.ndarray): The input image for which the descriptor is computed. It should be a 2D numpy array (grayscale).
+        **kwargs: Additional optional parameters to customize the mask:
+            mask (str): Type of mask to use. Options are 'kirsch' (default) or 'gaussian'.
+            msize (int): Size of the Kirsch mask. Options are 3, 5, 7, 9, or 11 (default is 3).
+            sigma (float): Standard deviation for the Gaussian mask (default is 0.5).
 
-    :raises ValueError: If an invalid mask type or size is provided.
+    Returns:
+        numpy.ndarray: The local descriptor matrix computed using the specified mask.
 
-    :example:
+    Raises:
+        ValueError: If an invalid mask type or size is provided.
+
+    Example:
         >>> import numpy as np
         >>> from skimage.data import camera
         >>> image = camera()
         >>> descriptor = descriptor_LDN(image, mask='kirsch', msize=5)
-        >>> print(descriptor.shape)
     """
     if kwargs is None:
         options = {}

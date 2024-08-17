@@ -6,25 +6,27 @@ def construct_Gabor_filters(num_of_orient, num_of_scales, size1, fmax=0.25,
     """
     Constructs a bank of Gabor filters.
 
-    :param num_of_orient: Number of orientations.
-    :type num_of_orient: int
-    :param num_of_scales: Number of scales.
-    :type num_of_scales: int
-    :param size1: Size of the filters. Can be an integer for square filters or a tuple for rectangular filters.
-    :type size1: int or tuple
-    :param fmax: Maximum frequency. Default is 0.25.
-    :type fmax: float, optional
-    :param ni: Bandwidth parameter. Default is sqrt(2).
-    :type ni: float, optional
-    :param gamma: Aspect ratio. Default is sqrt(2).
-    :type gamma: float, optional
-    :param separation: Frequency separation factor. Default is sqrt(2).
-    :type separation: float, optional
+    Args:
+        num_of_orient (int): Number of orientations.
+        num_of_scales (int): Number of scales.
+        size1 (int or tuple): Size of the filters. Can be an integer for square filters or a tuple for rectangular filters.
+        fmax (float, optional): Maximum frequency. Default is 0.25.
+        ni (float, optional): Bandwidth parameter. Default is sqrt(2).
+        gamma (float, optional): Aspect ratio. Default is sqrt(2).
+        separation (float, optional): Frequency separation factor. Default is sqrt(2).
 
-    :returns: A dictionary containing the spatial and frequency representations of the Gabor filters.
-    :rtype: dict
+    Returns:
+        dict: A dictionary containing the spatial and frequency representations of the Gabor filters.
+              The dictionary has the following keys:
+              'spatial': A 2D array where each element is a 2D array representing the spatial domain Gabor filter.
+              'freq': A 2D array where each element is a 2D array representing the frequency domain Gabor filter.
+              'scales': The number of scales used.
+              'orient': The number of orientations used.
 
-    :example:
+    Raises:
+        ValueError: If 'size1' is neither an integer nor a tuple of length 2.
+
+    Example:
         >>> import matplotlib.pyplot as plt
         >>> num_of_orient = 8
         >>> num_of_scales = 5

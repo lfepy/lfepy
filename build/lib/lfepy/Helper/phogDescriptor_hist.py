@@ -5,19 +5,20 @@ def phogDescriptor_hist(bh, bv, L, bin):
     """
     Compute the histogram of the Pyramid Histogram of Oriented Gradients (PHOG) descriptor.
 
-    :param bh: Bin matrix of the image, where each pixel is assigned a bin index.
-    :type bh: numpy.ndarray
-    :param bv: Gradient magnitude matrix corresponding to the bin matrix.
-    :type bv: numpy.ndarray
-    :param L: Number of pyramid levels.
-    :type L: int
-    :param bin: Number of bins for the histogram.
-    :type bin: int
+    This function calculates the PHOG descriptor histogram by computing histograms for multiple pyramid levels,
+    where each level represents different spatial resolutions. It uses the bin matrix `bh` to determine the orientation
+    of gradients and the gradient magnitude matrix `bv` to compute the histogram values.
 
-    :returns: Normalized histogram of the PHOG descriptor.
-    :rtype: numpy.ndarray
+    Args:
+        bh (numpy.ndarray): Bin matrix of the image, where each pixel is assigned a bin index.
+        bv (numpy.ndarray): Gradient magnitude matrix corresponding to the bin matrix.
+        L (int): Number of pyramid levels.
+        bin (int): Number of bins for the histogram.
 
-    :example:
+    Returns:
+        numpy.ndarray: Normalized histogram of the PHOG descriptor.
+
+    Example:
         >>> import numpy as np
         >>> bh = np.array([[1, 2], [2, 1]])
         >>> bv = np.array([[1, 2], [2, 1]])

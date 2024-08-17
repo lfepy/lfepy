@@ -6,40 +6,45 @@ def LDTP(image, **kwargs):
     """
     Compute Local Directional Texture Pattern (LDTP) descriptors and histograms from an input image.
 
-    :param image: Input image (preferably in NumPy array format).
-    :type image: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing LDTP extraction.
-    :type kwargs: dict
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
-    :param kwargs.epsi: Threshold value for texture difference. Default: 15.
-    :type kwargs.epsi: int
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing LDTP extraction.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
+            epsi (int): Threshold value for texture difference. Default is 15.
 
-    :returns:
-        - LDTP_hist: Histogram(s) of LDTP descriptors.
-        - imgDesc: LDTP descriptors.
-    :rtype: tuple of (numpy.ndarray, numpy.ndarray)
+    Returns:
+        tuple: A tuple containing:
+            LDTP_hist (numpy.ndarray): Histogram(s) of LDTP descriptors.
+            imgDesc (numpy.ndarray): LDTP descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If the `image` is not a valid `numpy.ndarray`.
+        ValueError: If the `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = LDTP(image, mode='nh', epsi=15)
+
         >>> plt.imshow(imgDesc, cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         A.R. Rivera, J.R. Castillo, and O. Chae,
-        Local directional texture pattern image descriptor.
-        Pattern Recognition Letters 51 (2015) 94-100.
+        Local Directional Texture Pattern Image Descriptor,
+        Pattern Recognition Letters,
+        vol. 51, 2015, pp. 94-100.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

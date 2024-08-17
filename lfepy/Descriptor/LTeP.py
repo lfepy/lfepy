@@ -5,41 +5,45 @@ def LTeP(image, **kwargs):
     """
     Compute Local Ternary Pattern (LTeP) histograms and descriptors from an input image.
 
-    :param img: Input image (preferably in NumPy array format).
-    :type img: numpy.ndarray
-    :param kwargs: Additional keyword arguments for customizing LTeP extraction.
-    :type kwargs: dict
-    :param kwargs.t: Threshold value for ternary pattern computation. Default: 2.
-    :type kwargs.t: int
-    :param kwargs.mode: Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default: 'nh'.
-    :type kwargs.mode: str
+    Args:
+        image (numpy.ndarray): Input image (preferably in NumPy array format).
+        **kwargs (dict): Additional keyword arguments for customizing LTeP extraction.
+            t (int): Threshold value for ternary pattern computation. Default is 2.
+            mode (str): Mode for histogram computation. Options: 'nh' (normalized histogram) or 'h' (histogram). Default is 'nh'.
 
-    :returns:
-        - LTeP_hist: Histogram(s) of LTeP descriptors.
-        - imgDesc: List of dictionaries containing LTeP descriptors.
-    :rtype: tuple of (numpy.ndarray, list)
+    Returns:
+        tuple: A tuple containing:
+            LTeP_hist (numpy.ndarray): Histogram(s) of LTeP descriptors.
+            imgDesc (list of dicts): List of dictionaries containing LTeP descriptors.
 
-    :example:
-        >>> from PIL import Image
+    Raises:
+        TypeError: If `image` is not a valid `numpy.ndarray`.
+        ValueError: If `mode` in `kwargs` is not a valid option.
+
+    Example:
         >>> import matplotlib.pyplot as plt
-        >>> image = Image.open("Path")
+        >>> from matplotlib.image import imread
+
+        >>> image = imread("Path")
         >>> histogram, imgDesc = LTeP(image, mode='nh', t=2)
+
         >>> plt.imshow(imgDesc[0]['fea'], cmap='gray')
         >>> plt.axis('off')
         >>> plt.show()
 
-    :references:
+    References:
         F. Bashar, A. Khan, F. Ahmed, and M.H. Kabir,
-        Robust facial expression recognition based on median ternary pattern (MTP),
-        Electrical Information and Communication Technology (EICT), 2013 International Conference on,
-        IEEE, 2014, pp. 1-5.
+        Robust Facial Expression Recognition Based on Median Ternary Pattern (MTP),
+        Electrical Information and Communication Technology (EICT), IEEE,
+        2014, pp. 1-5.
     """
     # Input validation
     if image is None or not isinstance(image, np.ndarray):
         raise TypeError("The image must be a valid numpy.ndarray.")
 
-    # Convert the input image to double precision
-    image = np.double(image)
+    # Convert the input image to double precision if needed
+    if image.dtype != np.float64:
+        image = np.double(image)
 
     # Convert to grayscale if needed
     if len(image.shape) == 3:

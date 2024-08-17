@@ -9,36 +9,40 @@ def descriptor_PHOG(image, bin=8, angle=360, L=2, roi=None):
     """
     Compute the Pyramid Histogram of Oriented Gradients (PHOG) descriptor for a 2D image.
 
-    :param image: Input image, which can be grayscale or RGB.
-    :type image: numpy.ndarray
-    :param bin: Number of orientation bins for the histogram. Default is 8.
-    :type bin: int, optional
-    :param angle: Angle range for orientation. Can be 180 or 360 degrees. Default is 360.
-    :type angle: int, optional
-    :param L: Number of pyramid levels. Default is 2.
-    :type L: int, optional
-    :param roi: Region of Interest (ROI) as [y_min, y_max, x_min, x_max]. If None, the entire image is used.
-    :type roi: list or None, optional
+    The PHOG descriptor captures gradient information at multiple scales and orientations,
+    providing a detailed description of image shapes and textures. The descriptor is computed
+    for different levels of a pyramid and can be used for object recognition and image analysis.
 
-    :returns:
-        - p_hist: List of histograms for each pyramid level.
-        - bh_roi: Gradient magnitude matrix for the ROI.
-        - bv_roi: Gradient orientation matrix for the ROI.
-    :rtype:
-        - p_hist: list
-        - bh_roi: numpy.ndarray
-        - bv_roi: numpy.ndarray
+    Args:
+        image (numpy.ndarray): Input image, which can be grayscale or RGB.
+        bin (int, optional): Number of orientation bins for the histogram. Default is 8.
+        angle (int, optional): Angle range for orientation. Can be 180 or 360 degrees. Default is 360.
+        L (int, optional): Number of pyramid levels. Default is 2.
+        roi (list or None, optional): Region of Interest (ROI) specified as [y_min, y_max, x_min, x_max].
+                                      If None, the entire image is used. Default is None.
 
-    :example:
+    Returns:
+        tuple: A tuple containing:
+            p_hist (list): List of histograms for each pyramid level.
+            bh_roi (numpy.ndarray): Gradient magnitude matrix for the ROI.
+            bv_roi (numpy.ndarray): Gradient orientation matrix for the ROI.
+
+    Raises:
+        ValueError: If:
+            'image' is not a 2D array or a 3D array with the third dimension not being 3 (RGB).
+            'angle' is not 180 or 360.
+            'roi' is not a list or None.
+
+    Example:
         >>> import numpy as np
         >>> from skimage import data
-        >>> image = data.camera()  # Example grayscale image
+        >>> image = data.camera()
         >>> p_hist, bh_roi, bv_roi = descriptor_PHOG(image, bin=8, angle=360, L=2)
-        >>> print(len(p_hist))  # Number of levels in the PHOG descriptor
+        >>> print(len(p_hist))
         2
-        >>> print(bh_roi.shape)  # Shape of the gradient magnitude matrix for the ROI
+        >>> print(bh_roi.shape)
         (480, 640)
-        >>> print(bv_roi.shape)  # Shape of the gradient orientation matrix for the ROI
+        >>> print(bv_roi.shape)
         (480, 640)
     """
     # Set ROI to the entire image if not specified

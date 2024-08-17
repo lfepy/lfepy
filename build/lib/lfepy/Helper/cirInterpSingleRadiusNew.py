@@ -5,20 +5,21 @@ def cirInterpSingleRadiusNew(img, lbpPoints, lbpRadius):
     """
     Extract circularly interpolated image blocks around a specified radius and number of points.
 
-    :param img: The input grayscale image.
-    :type img: numpy.ndarray
-    :param lbpPoints: The number of points used in the LBP pattern.
-    :type lbpPoints: int
-    :param lbpRadius: The radius of the circular neighborhood.
-    :type lbpRadius: int
+    Args:
+        img (numpy.ndarray): The input grayscale image.
+        lbpPoints (int): The number of points used in the LBP pattern.
+        lbpRadius (int): The radius of the circular neighborhood.
 
-    :returns:
-        - blocks: A 2D array where each row represents a circularly interpolated block.
-        - dx: The width of the output blocks.
-        - dy: The height of the output blocks.
-    :rtype: tuple (numpy.ndarray, int, int)
+    Returns:
+        tuple:
+            blocks (numpy.ndarray): A 2D array where each row represents a circularly interpolated block.
+            dx (int): The width of the output blocks.
+            dy (int): The height of the output blocks.
 
-    :example:
+    Raises:
+        ValueError: If the input image is too small. The image should be at least (2*radius + 1) x (2*radius + 1).
+
+    Example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()

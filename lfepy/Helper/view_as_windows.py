@@ -5,19 +5,21 @@ def view_as_windows(arr, window_shape, step=1):
     """
     Create a view of an array with sliding windows.
 
-    :param arr: The input array.
-    :type arr: numpy.ndarray
-    :param window_shape: Shape of the sliding window.
-    :type window_shape: tuple
-    :param step: Step size of the sliding window.
-    :type step: int or tuple
+    This function generates a view of the input array where each element in the view is a sliding window of a specified shape. The windows are extracted with a given step size.
 
-    :returns: A view of the array with sliding windows.
-    :rtype: numpy.ndarray
+    Args:
+        arr (numpy.ndarray): The input array from which windows will be extracted.
+        window_shape (tuple): Shape of the sliding window.
+        step (int or tuple, optional): Step size of the sliding window. If an integer is provided, it is applied uniformly across all dimensions. Default is 1.
 
-    :raises ValueError: If any dimension of the window shape is larger than the corresponding dimension of the array.
+    Returns:
+        numpy.ndarray: A view of the array with sliding windows.
 
-    :example:
+    Raises:
+        ValueError: If any dimension of the window shape is larger than the corresponding dimension of the array.
+
+    Example:
+        >>> import numpy as np
         >>> view_as_windows(np.array([1, 2, 3, 4]), window_shape=(2,), step=1)
         array([[1, 2],
                [2, 3],

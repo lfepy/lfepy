@@ -6,24 +6,23 @@ def RDLBP_Image_SmallestRadiusOnly(imgCenSmooth, img, lbpRadius, lbpPoints, mapp
     """
     Compute the Radial Difference Local Binary Pattern (RDLBP) for an image with a focus on the smallest radius.
 
-    :param imgCenSmooth: Smoothed image from which the radial difference is computed.
-    :type imgCenSmooth: numpy.ndarray
-    :param img: Original image for extracting circularly interpolated blocks.
-    :type img: numpy.ndarray
-    :param lbpRadius: Radius of the circular neighborhood for LBP.
-    :type lbpRadius: int
-    :param lbpPoints: Number of points used in the LBP pattern.
-    :type lbpPoints: int
-    :param mapping: Optional mapping dictionary for converting LBP result to a different bin scheme.
-        Must contain 'num' (number of bins) and 'table' (mapping from old bin to new bin).
-    :type mapping: dict or None
-    :param mode: Output mode. 'h' or 'hist' for histogram of the RDLBP, 'nh' for normalized histogram.
-    :type mode: str
+    This function calculates the RDLBP descriptor for an image by comparing the radial differences between
+    the original image and a smoothed version of the image. The descriptor is computed using a circular neighborhood
+    defined by the given radius and number of points.
 
-    :returns: RDLBP descriptor, either as a histogram or image depending on the `mode` parameter.
-    :rtype: numpy.ndarray
+    Args:
+        imgCenSmooth (numpy.ndarray): Smoothed image from which the radial difference is computed.
+        img (numpy.ndarray): Original image for extracting circularly interpolated blocks.
+        lbpRadius (int): Radius of the circular neighborhood for Local Binary Pattern (LBP).
+        lbpPoints (int): Number of points used in the LBP pattern.
+        mapping (dict or None): Optional mapping dictionary for converting LBP result to a different bin scheme.
+            Must contain 'num' (number of bins) and 'table' (mapping from old bin to new bin). If None, no mapping is applied.
+        mode (str): Output mode. 'h' or 'hist' for histogram of the RDLBP, 'nh' for normalized histogram.
 
-    :example:
+    Returns:
+        numpy.ndarray: RDLBP descriptor, either as a histogram or image depending on the `mode` parameter.
+
+    Example:
         >>> import numpy as np
         >>> from skimage import data
         >>> img = data.camera()
@@ -33,7 +32,7 @@ def RDLBP_Image_SmallestRadiusOnly(imgCenSmooth, img, lbpRadius, lbpPoints, mapp
         >>> mapping = {'num': 256, 'table': np.arange(256)}
         >>> hist = RDLBP_Image_SmallestRadiusOnly(imgCenSmooth, img, lbpRadius, lbpPoints, mapping, mode='nh')
         >>> print(hist.shape)
-        (256,)  # Example output shape for normalized histogram
+        (256,)
     """
     # Extract circularly interpolated blocks from the original image
     blocks1, dx, dy = cirInterpSingleRadiusNew(img, lbpPoints, lbpRadius)
