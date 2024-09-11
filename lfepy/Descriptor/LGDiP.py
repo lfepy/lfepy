@@ -1,5 +1,6 @@
 import numpy as np
 from lfepy.Helper import gabor_filter
+from lfepy.Validator import validate_image, validate_kwargs, validate_mode
 
 
 def LGDiP(image, **kwargs):
@@ -37,32 +38,10 @@ def LGDiP(image, **kwargs):
         ICCIT 2012: 15th International Conference on Computer and Information Technology, IEEE,
         2012, pp. 164-167.
     """
-    # Input validation
-    if image is None or not isinstance(image, np.ndarray):
-        raise TypeError("The image must be a valid numpy.ndarray.")
-
-    # Convert the input image to double precision if needed
-    if image.dtype != np.float64:
-        image = np.double(image)
-
-    # Convert to grayscale if needed
-    if len(image.shape) == 3:
-        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
-
-    # Handle keyword arguments
-    if kwargs is None:
-        options = {}
-    else:
-        options = kwargs
-
-    # Extract histogram mode
-    if 'mode' not in options:
-        options['mode'] = 'nh'
-
-    # Validate the mode
-    valid_modes = ['nh', 'h']
-    if options['mode'] not in valid_modes:
-        raise ValueError(f"Invalid mode '{options['mode']}'. Valid options are {valid_modes}.")
+    # Input data validation
+    image = validate_image(image)
+    options = validate_kwargs(**kwargs)
+    options = validate_mode(options)
 
     # Define unique bin values
     uniqueBin = np.array([7, 11, 13, 14, 19, 21, 22, 25, 26, 28, 35, 37, 38, 41, 42, 44,

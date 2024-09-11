@@ -1,5 +1,6 @@
 import numpy as np
 from lfepy.Helper import descriptor_PHOG, phogDescriptor_hist
+from lfepy.Validator import validate_image, validate_kwargs, validate_mode, validate_bin, validate_angle, validate_L
 
 
 def PHOG(image, **kwargs):
@@ -40,37 +41,13 @@ def PHOG(image, **kwargs):
         Proceedings of the 6th ACM international conference on Image and video retrieval, ACM,
         2007, pp. 401-408.
     """
-    # Input validation
-    if image is None or not isinstance(image, np.ndarray):
-        raise TypeError("The image must be a valid numpy.ndarray.")
-
-    # Convert the input image to double precision if needed
-    if image.dtype != np.float64:
-        image = np.double(image)
-
-    # Convert to grayscale if needed
-    if len(image.shape) == 3:
-        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
-
-    # Handle keyword arguments
-    if kwargs is None:
-        options = {}
-    else:
-        options = kwargs
-
-    # Extract histogram mode
-    if 'mode' not in options:
-        options.update({'mode': 'nh'})
-
-    # Validate the mode
-    valid_modes = ['nh', 'h']
-    if options['mode'] not in valid_modes:
-        raise ValueError(f"Invalid mode '{options['mode']}'. Valid options are {valid_modes}.")
-
-    # Set defaults
-    bin = options.get('bin', 8)
-    angle = options.get('angle', 360)
-    L = options.get('L', 2)
+    # Input data validation
+    image = validate_image(image)
+    options = validate_kwargs(**kwargs)
+    options = validate_mode(options)
+    bin = validate_bin(options)
+    angle = validate_angle(options)
+    L = validate_L(options)
 
     # Define the region of interest (ROI)
     roi = [0, image.shape[0], 0, image.shape[1]]

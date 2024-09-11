@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.signal import convolve2d
 from lfepy.Descriptor.LTeP import LTeP
+from lfepy.Validator import validate_image, validate_kwargs, validate_mode, validate_DGLP
 
 
 def GLTP(image, **kwargs):
@@ -46,41 +47,11 @@ def GLTP(image, **kwargs):
         in *Chinese Journal of Engineering*,
         vol. 2013, 2013.
     """
-    # Input validation
-    if image is None or not isinstance(image, np.ndarray):
-        raise TypeError("The image must be a valid numpy.ndarray.")
-
-    # Convert the input image to double precision if needed
-    if image.dtype != np.float64:
-        image = np.double(image)
-
-    # Convert to grayscale if needed
-    if len(image.shape) == 3:
-        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
-
-    # Handle keyword arguments
-    if kwargs is None:
-        options = {}
-    else:
-        options = kwargs
-
-    # Extract histogram mode
-    if 'mode' not in options:
-        options.update({'mode': 'nh'})
-
-    # Validate the mode
-    valid_modes = ['nh', 'h']
-    if options['mode'] not in valid_modes:
-        raise ValueError(f"Invalid mode '{options['mode']}'. Valid options are {valid_modes}.")
-
-    # Extract the DGLP
-    if 'DGLP' not in options:
-        options.update({'DGLP': 0})
-
-    # Validate the DGLP
-    valid_DGLP = [0, 1]
-    if options['DGLP'] not in valid_DGLP:
-        raise ValueError(f"Invalid DGLP '{options['DGLP']}'. Valid DGLP are {valid_DGLP}.")
+    # Input data validation
+    image = validate_image(image)
+    options = validate_kwargs(**kwargs)
+    options = validate_mode(options)
+    options = validate_DGLP(options)
 
     EPSILON = 1e-7
 

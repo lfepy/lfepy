@@ -1,5 +1,6 @@
 import numpy as np
 from lfepy.Helper import descriptor_LBP, get_mapping
+from lfepy.Validator import validate_image, validate_kwargs, validate_mode, validate_mappingType, validate_radius
 
 
 def LBP(image, **kwargs):
@@ -39,65 +40,14 @@ def LBP(image, **kwargs):
         IEEE Transactions on Pattern Analysis and Machine Intelligence,
         vol. 24, pp. 971-987, 2002.
     """
-    # Input validation
-    if image is None or not isinstance(image, np.ndarray):
-        raise TypeError("The image must be a valid numpy.ndarray.")
-
-    # Convert the input image to double precision if needed
-    if image.dtype != np.float64:
-        image = np.double(image)
-
-    # Convert to grayscale if needed
-    if len(image.shape) == 3:
-        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
-
-    # Handle keyword arguments
-    if kwargs is None:
-        options = {}
-    else:
-        options = kwargs
-
-    # Extract radius and compute number of neighbors or use defaults
-    if 'radius' in options:
-        radius = options['radius']
-        neighbors = 8 * radius
-    else:
-        radius = 1
-        neighbors = 8
-
-    # Extract histogram mode
-    if 'mode' not in options:
-        options['mode'] = 'nh'
-
-    # Validate the mode
-    valid_modes = ['nh', 'h']
-    if options['mode'] not in valid_modes:
-        raise ValueError(f"Invalid mode '{options['mode']}'. Valid options are {valid_modes}.")
+    # Input data validation
+    image = validate_image(image)
+    options = validate_kwargs(**kwargs)
+    options = validate_mode(options)
+    options, radius, neighbors = validate_radius(options)
+    options, mapping = validate_mappingType(options, radius, neighbors)
 
     mode = options['mode']
-
-    # Handle mapping type and adjust bin vector accordingly
-    if 'mappingType' in options and options['mappingType'] != 'full':
-        mappingType = options['mappingType']
-        mapping = get_mapping(neighbors, mappingType)
-        if mappingType == 'u2':
-            if radius == 1:
-                options['binVec'] = np.arange(0, 59)
-            elif radius == 2:
-                options['binVec'] = np.arange(0, 243)
-        elif mappingType == 'ri':
-            if radius == 1:
-                options['binVec'] = np.arange(0, 36)
-            elif radius == 2:
-                options['binVec'] = np.arange(0, 4117)
-        else:
-            if radius == 1:
-                options['binVec'] = np.arange(0, 10)
-            elif radius == 2:
-                options['binVec'] = np.arange(0, 16)
-    else:
-        mapping = 0
-        options['binVec'] = np.arange(0, 256)
 
     # Extract LBP descriptors
     _, imgDesc = descriptor_LBP(image, radius, neighbors, mapping, mode)

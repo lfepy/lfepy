@@ -34,8 +34,8 @@ __all__ = ["bin_matrix", "cirInterpSingleRadius_ct", "cirInterpSingleRadiusNew",
            "phogDescriptor_hist", "RDLBP_Image_SmallestRadiusOnly", "roundn", "view_as_windows"]
 
 # __init__.py in the main package
-__version__ = '1.0.7'
-__author__ = ["Dr. Prof. Khalid M. Hosny", "BSc. Mahmoud A. Mohamed", "Dr. Rania Salama", "Dr. Ahmed M. Elshewey"]
+__version__ = '1.0.8'
+__author__ = ["Dr. Prof. Khalid M. Hosny", "BSc. Mahmoud A. Mohamed", "Dr. Rania A. Salama", "Dr. Ahmed M. Elshewey"]
 __license__ = 'MIT'
 
 # Example of a package-wide configuration

@@ -1,4 +1,5 @@
 import numpy as np
+from lfepy.Validator import validate_image, validate_kwargs, validate_mode
 
 
 def LGIP(image, **kwargs):
@@ -36,32 +37,10 @@ def LGIP(image, **kwargs):
         Image Processing (ICIP), 2012 19th IEEE International Conference on, IEEE,
         2012, pp. 2601-2604.
     """
-    # Input validation
-    if image is None or not isinstance(image, np.ndarray):
-        raise TypeError("The image must be a valid numpy.ndarray.")
-
-    # Convert the input image to double precision if needed
-    if image.dtype != np.float64:
-        image = np.double(image)
-
-    # Convert to grayscale if needed
-    if len(image.shape) == 3:
-        image = np.dot(image[..., :3], [0.2989, 0.5870, 0.1140])
-
-    # Handle keyword arguments
-    if kwargs is None:
-        options = {}
-    else:
-        options = kwargs
-
-    # Extract histogram mode
-    if 'mode' not in options:
-        options.update({'mode': 'nh'})
-
-    # Validate the mode
-    valid_modes = ['nh', 'h']
-    if options['mode'] not in valid_modes:
-        raise ValueError(f"Invalid mode '{options['mode']}'. Valid options are {valid_modes}.")
+    # Input data validation
+    image = validate_image(image)
+    options = validate_kwargs(**kwargs)
+    options = validate_mode(options)
 
     # Get image dimensions
     r, c = image.shape
