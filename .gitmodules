@@ -1,0 +1,6 @@
+[submodule "lfepy-cpu"]
+	path = lfepy-cpu
+	url = https://github.com/lfepy/lfepy-cpu.git
+[submodule "lfepy-gpu"]
+	path = lfepy-gpu
+	url = https://github.com/lfepy/lfepy-gpu.git
